@@ -8,31 +8,40 @@
 import SwiftUI
 struct HomeView: View {
     
-    @State var showMenu = false
+    @State private var isShowMenu = false
     @State var showCart = false
     @State var searchItem = ""
     
+    init(){
+        navBarInit()
+    }
     var body: some View {
         ZStack {
-            VStack(spacing: 0.0) {
+            NavigationView {
+                VStack(spacing: 0.0) {
+                    
+                    SideBarAndHeader(showMenu: $isShowMenu, showCart: $showCart)
+                    
+                    Slideshow()
+                    
+                    SearchBar(searchItem: $searchItem)
+                        .padding(.horizontal,68)
+                        .padding(.vertical,18)
+                    
+                    Spacer()
+                    MenuScroll()
+                }
+                .frame(maxWidth:.infinity,maxHeight: .infinity)
+                .background(LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 0.3678437173, green: 0.2994093597, blue: 0.2702392936, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1))]), startPoint: .top, endPoint: .bottom))
+                .blur(radius: isShowMenu||showCart ? 10:0)
+                .animation(.easeInOut)
+                .navigationTitle("首頁")
+                .navigationBarTitleDisplayMode(.inline)
+//                .navigationBarItems(leading:HeaderButton(show: <#T##Binding<Bool>#>, iconImage: <#T##String#>))
                 
-                SideBarAndHeader(showMenu: $showMenu, showCart: $showCart)
-                
-                Slideshow()
-                
-                SearchBar(searchItem: $searchItem)
-                    .padding(.horizontal,68)
-                    .padding(.vertical,18)
-                
-                Spacer()
-                MenuScroll()
             }
-            .frame(maxWidth:.infinity,maxHeight: .infinity)
-            .background(LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 0.3678437173, green: 0.2994093597, blue: 0.2702392936, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1))]), startPoint: .top, endPoint: .bottom))
-            .blur(radius: showMenu||showCart ? 10:0)
-            .animation(.easeInOut)
             
-            SideBarView(show:$showMenu)
+            SideMenuView(show:$isShowMenu)
         }
         
         
