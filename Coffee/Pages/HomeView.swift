@@ -7,7 +7,7 @@
 
 import SwiftUI
 struct HomeView: View {
-    
+    @EnvironmentObject var isShow : Show
     @State private var isShowMenu = false
     @State var showCart = false
     @State var searchItem = ""
@@ -19,8 +19,6 @@ struct HomeView: View {
         ZStack {
             NavigationView {
                 VStack(spacing: 0.0) {
-                    
-                    SideBarAndHeader(showMenu: $isShowMenu, showCart: $showCart)
                     
                     Slideshow()
                     
@@ -37,11 +35,11 @@ struct HomeView: View {
                 .animation(.easeInOut)
                 .navigationTitle("首頁")
                 .navigationBarTitleDisplayMode(.inline)
-//                .navigationBarItems(leading:HeaderButton(show: <#T##Binding<Bool>#>, iconImage: <#T##String#>))
+                .navigationBarItems(leading:HeaderButton(show: $isShow.menu, iconImage: "menu").padding(.bottom,10),trailing: HeaderButton(show: $isShowMenu, iconImage: "cart").padding(.bottom,10))
                 
             }
             
-            SideMenuView(show:$isShowMenu)
+            SideMenuView(show:$isShow.menu)
         }
         
         
@@ -49,8 +47,10 @@ struct HomeView: View {
 }
 
 struct HomeView_Previews: PreviewProvider {
+    
     static var previews: some View {
-        HomeView()
+        
+        HomeView().environmentObject(Show())
     }
 }
 
@@ -85,11 +85,18 @@ struct SearchBar: View {
                     .padding(.vertical,6)
                 ExDivider()
                 
-                Image(systemName: "magnifyingglass")
-                    .resizable()
-                    .frame(width: 22, height: 22)
-                    .padding(7)
-                    .foregroundColor(Color("iconGray"))
+                
+                
+                NavigationLink(
+                    destination: MenuView(items:search(searchText: searchItem)),
+                    label: {
+                        Image(systemName: "magnifyingglass")
+                            .resizable()
+                            .frame(width: 22, height: 22)
+                            .padding(7)
+                            .foregroundColor(Color("iconGray"))
+                    })
+                
                 
             }.font(.subheadline)
             .padding(.leading)
@@ -117,7 +124,7 @@ struct SearchBar: View {
 
 
 struct MenuScroll: View {
-    var introductions = MenuCategoryData
+    var menus = menusData
     
     var body: some View {
         VStack(alignment: .leading, spacing: 2.0) {
@@ -129,8 +136,14 @@ struct MenuScroll: View {
             
             ScrollView(.horizontal,showsIndicators: false) {
                 HStack(spacing:20) {
-                    ForEach(introductions) { item in
-                        MenuView(item: item)
+                    ForEach(menus) { item in
+                        NavigationLink(
+                            
+                            destination: MenuView(title:item.title,items: menuSearch(type: item.type)),
+                            
+                            label: {
+                                MenuCategory(item: item)
+                            })
                     }
                 }
                 .padding(10)
@@ -141,24 +154,10 @@ struct MenuScroll: View {
     }
 }
 
-struct MenuCategory : Identifiable {
-    var id = UUID()
-    var title : String
-    var image : String
-    
-}
 
-let MenuCategoryData = [
-    MenuCategory(title: "熱門餐點", image: "MenuImage.hot"),
-    MenuCategory(title: "全部餐點", image: "MenuImage.main"),
-    MenuCategory(title: "心情點餐", image: "ManuImage.mind"),
-    MenuCategory(title: "飲料", image: "MenuImage.drinks")
+struct MenuCategory: View {
     
-]
-
-struct MenuView: View {
-    
-    var item = MenuCategory(title: "Fast", image: "MenuImage.hot")
+    var item = Menu(title: "Fast", image: "MenuImage.hot",type:"Hot")
     
     
     var body: some View {
@@ -167,7 +166,7 @@ struct MenuView: View {
             Image(item.image)
                 .resizable()
                 .scaledToFill()
-                .frame(maxWidth: 115, maxHeight: 115)
+                .frame(width: 115, height: 115)
                 .cornerRadius(5)
             
             Text(item.title)

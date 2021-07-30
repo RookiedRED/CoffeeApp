@@ -15,7 +15,7 @@ enum SideMenuViewModel:Int,CaseIterable{
     case reservation
     case reservationHistory
     case orderHistory
-    case evet
+    case event
     case knowledge
     case logout
     
@@ -28,7 +28,7 @@ enum SideMenuViewModel:Int,CaseIterable{
         case .reservation: return"訂位"
         case .reservationHistory: return"歷史訂位"
         case .orderHistory: return"歷史訂單"
-        case .evet: return"活動"
+        case .event: return"活動"
         case .knowledge: return"咖啡知識"
         case .logout: return"登出"
         }
@@ -42,7 +42,7 @@ enum SideMenuViewModel:Int,CaseIterable{
         case .reservation: return"calendar"
         case .reservationHistory: return"calendar.badge.clock"
         case .orderHistory: return"list.bullet.rectangle"
-        case .evet: return"megaphone"
+        case .event: return"megaphone"
         case .knowledge: return"suit.heart"
         case .logout: return"arrow.uturn.backward"
         }
