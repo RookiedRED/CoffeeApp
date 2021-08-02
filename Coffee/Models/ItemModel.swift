@@ -40,7 +40,8 @@ func search(searchText:String) -> [Item] {
     
     let searchData :[Item] = itemsData
     var searchReturn = [Item]()
-
+    
+    if searchText == "" {return searchData}
     for i in 0..<searchData.count{
         if searchData[i].name.contains(searchText) {
             searchReturn.append(searchData[i])

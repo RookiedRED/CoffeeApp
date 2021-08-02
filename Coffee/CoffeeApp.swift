@@ -12,8 +12,9 @@ struct CoffeeApp: App {
     
     
     var body: some Scene {
+        
         WindowGroup {
-            HomeView().environmentObject(Show())
+            EntryView().environmentObject(Show())
         }
     }
     

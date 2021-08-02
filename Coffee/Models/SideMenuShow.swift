@@ -8,10 +8,17 @@
 import SwiftUI
 
 class Show :ObservableObject{
+    
     @Published var menu:Bool
+    @Published var cart:Bool
+    @Published var pages:String
+    
     
     init() {
         menu = false
+        cart = false
+        pages = "Home"
+        
     }
     
 

@@ -38,7 +38,7 @@ struct SideBarAndHeader: View {
                         .onTapGesture {
                             self.showMenu.toggle()
                         }
-                    
+                    BackButton()
                     Spacer()
                     
                     Text("首頁")
@@ -72,6 +72,50 @@ struct SideBarAndHeader_Previews: PreviewProvider {
 }
 
 
+struct BackButton:View {
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
+    var body: some View {
+        ZStack {
+
+            Button(action: {
+                self.presentationMode.wrappedValue.dismiss()
+            }, label: {
+                HStack(spacing:0){
+                    Image("back")
+                        .resizable()
+                        .foregroundColor(Color("iconGray"))
+                        .frame(width: 15, height: 20)
+                    Text("首頁")
+                        .foregroundColor(Color("iconGray"))
+                }
+            })
+            .padding(.horizontal,3)
+            .frame(width: 60, height: 35, alignment: .leading)
+            .background(
+                ZStack {
+                    LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 0.2, green: 0.1803921569, blue: 0.168627451, alpha: 1)), Color(#colorLiteral(red: 0.1137254902, green: 0.04705882353, blue: 0, alpha: 1))]), startPoint: .topLeading, endPoint: .bottomTrailing)
+                    
+                    Rectangle()//inner right-bottom shadow
+                        .stroke(Color.clear,lineWidth: 5)
+                        .shadow(color: Color(.black).opacity(0.2), radius: 5, x: -3, y: -3)
+                    
+                    Rectangle()//inner left-top light
+                        .stroke(Color.clear,lineWidth: 5)
+                        .shadow(color: Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)).opacity(0.1), radius: 5, x: 3, y: 3)
+                })
+            .cornerRadius(10)
+            
+            //Button stoke
+            .overlay(RoundedRectangle(cornerRadius: 10).stroke(LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 0.1294117647, green: 0.1176470588, blue: 0.003921568627, alpha: 1)), Color(#colorLiteral(red: 0.1529411765, green: 0.1137254902, blue: 0.0862745098, alpha: 0.59))]), startPoint: .topLeading, endPoint: .bottomTrailing )))
+            
+            //Button backshadow
+            .shadow(color: Color(#colorLiteral(red: 0.7725490196, green: 0.7607843137, blue: 0.7607843137, alpha: 0.12)), radius: 4, x: 0.0, y: 0.0)
+            .shadow(color: Color(#colorLiteral(red: 0.02745098039, green: 0.01568627451, blue: 0, alpha: 0.4250843199)), radius: 1, x: 2, y: 2)
+        }
+        
+    }
+}
 struct HeaderButton: View {
     @Binding var show : Bool
     var iconImage:String

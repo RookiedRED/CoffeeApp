@@ -16,8 +16,8 @@ struct HomeView: View {
         navBarInit()
     }
     var body: some View {
-        ZStack {
-            NavigationView {
+       
+            ZStack {
                 VStack(spacing: 0.0) {
                     
                     Slideshow()
@@ -31,16 +31,17 @@ struct HomeView: View {
                 }
                 .frame(maxWidth:.infinity,maxHeight: .infinity)
                 .background(LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 0.3678437173, green: 0.2994093597, blue: 0.2702392936, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1))]), startPoint: .top, endPoint: .bottom))
-                .blur(radius: isShowMenu||showCart ? 10:0)
+                .blur(radius: isShow.menu||isShow.cart ? 10:0)
                 .animation(.easeInOut)
                 .navigationTitle("首頁")
                 .navigationBarTitleDisplayMode(.inline)
-                .navigationBarItems(leading:HeaderButton(show: $isShow.menu, iconImage: "menu").padding(.bottom,10),trailing: HeaderButton(show: $isShowMenu, iconImage: "cart").padding(.bottom,10))
+                .navigationBarItems(leading:HeaderButton(show: $isShow.menu, iconImage: "menu").padding(.bottom,10),trailing: HeaderButton(show: $isShow.cart, iconImage: "cart").padding(.bottom,10))
                 
+
             }
             
-            SideMenuView(show:$isShow.menu)
-        }
+            
+        
         
         
     }
@@ -88,7 +89,7 @@ struct SearchBar: View {
                 
                 
                 NavigationLink(
-                    destination: MenuView(items:search(searchText: searchItem)),
+                    destination: MenuView(title:searchItem,items:search(searchText: searchItem)).environmentObject(Show()),
                     label: {
                         Image(systemName: "magnifyingglass")
                             .resizable()
@@ -139,7 +140,7 @@ struct MenuScroll: View {
                     ForEach(menus) { item in
                         NavigationLink(
                             
-                            destination: MenuView(title:item.title,items: menuSearch(type: item.type)),
+                            destination: MenuView(title:item.title,items: menuSearch(type: item.type)).environmentObject(Show()),
                             
                             label: {
                                 MenuCategory(item: item)

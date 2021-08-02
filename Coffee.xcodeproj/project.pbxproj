@@ -17,6 +17,9 @@
 		129B977626B3919200F3DB20 /* ItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129B977526B3919200F3DB20 /* ItemModel.swift */; };
 		129B977826B3944C00F3DB20 /* itemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129B977726B3944C00F3DB20 /* itemView.swift */; };
 		129B977E26B3D7FC00F3DB20 /* MenuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129B977D26B3D7FC00F3DB20 /* MenuModel.swift */; };
+		129B978026B796AC00F3DB20 /* EntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129B977F26B796AC00F3DB20 /* EntryView.swift */; };
+		129B978226B7CB6300F3DB20 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129B978126B7CB6300F3DB20 /* CardView.swift */; };
+		129B978626B7D39600F3DB20 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129B978526B7D39600F3DB20 /* NotificationView.swift */; };
 		12D5FB7426A8FDCF00B275B1 /* CoffeeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D5FB7326A8FDCF00B275B1 /* CoffeeApp.swift */; };
 		12D5FB7826A8FDD100B275B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 12D5FB7726A8FDD100B275B1 /* Assets.xcassets */; };
 		12D5FB7B26A8FDD100B275B1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 12D5FB7A26A8FDD100B275B1 /* Preview Assets.xcassets */; };
@@ -35,6 +38,9 @@
 		129B977526B3919200F3DB20 /* ItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemModel.swift; sourceTree = "<group>"; };
 		129B977726B3944C00F3DB20 /* itemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = itemView.swift; sourceTree = "<group>"; };
 		129B977D26B3D7FC00F3DB20 /* MenuModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuModel.swift; sourceTree = "<group>"; };
+		129B977F26B796AC00F3DB20 /* EntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryView.swift; sourceTree = "<group>"; };
+		129B978126B7CB6300F3DB20 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		129B978526B7D39600F3DB20 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 		12D5FB7026A8FDCF00B275B1 /* Coffee.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Coffee.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		12D5FB7326A8FDCF00B275B1 /* CoffeeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeApp.swift; sourceTree = "<group>"; };
 		12D5FB7726A8FDD100B275B1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -62,6 +68,7 @@
 				129B976B26B12B9300F3DB20 /* SideMenuView.swift */,
 				12D5FB8426A8FE3700B275B1 /* SideBarAndHeader.swift */,
 				129B975D26AC5F4200F3DB20 /* Slideshow.swift */,
+				129B978126B7CB6300F3DB20 /* CardView.swift */,
 			);
 			path = "Views&Components";
 			sourceTree = "<group>";
@@ -80,8 +87,10 @@
 		129B977B26B3A46000F3DB20 /* Pages */ = {
 			isa = PBXGroup;
 			children = (
+				129B977F26B796AC00F3DB20 /* EntryView.swift */,
 				12D5FB8226A8FDF900B275B1 /* HomeView.swift */,
 				129B977126B1445200F3DB20 /* MenuView.swift */,
+				129B978526B7D39600F3DB20 /* NotificationView.swift */,
 			);
 			path = Pages;
 			sourceTree = "<group>";
@@ -208,6 +217,8 @@
 				12D5FB8326A8FDF900B275B1 /* HomeView.swift in Sources */,
 				129B977826B3944C00F3DB20 /* itemView.swift in Sources */,
 				129B976C26B12B9300F3DB20 /* SideMenuView.swift in Sources */,
+				129B978626B7D39600F3DB20 /* NotificationView.swift in Sources */,
+				129B978026B796AC00F3DB20 /* EntryView.swift in Sources */,
 				129B977226B1445200F3DB20 /* MenuView.swift in Sources */,
 				129B975C26AC4E0200F3DB20 /* BlurView.swift in Sources */,
 				12D5FB7426A8FDCF00B275B1 /* CoffeeApp.swift in Sources */,
@@ -216,6 +227,7 @@
 				12D5FB8526A8FE3700B275B1 /* SideBarAndHeader.swift in Sources */,
 				129B977026B12BD000F3DB20 /* SideMenuViewModel.swift in Sources */,
 				129B976A26B122B100F3DB20 /* NavBarAppearance.swift in Sources */,
+				129B978226B7CB6300F3DB20 /* CardView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

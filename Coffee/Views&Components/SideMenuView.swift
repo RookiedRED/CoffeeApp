@@ -8,28 +8,35 @@
 import SwiftUI
 
 struct SideMenuView: View {
+    @EnvironmentObject var isShow : Show
     @Binding var show : Bool
     var body: some View {
         
         ZStack{
             
             //BorderSpaceBack
-            Color(show ? #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.01):#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0))
-            .frame(minWidth: 0,maxWidth: .infinity, minHeight: 0,maxHeight: .infinity)
-            .onTapGesture {
-                self.show.toggle()
-            }
+            Color(isShow.menu ? #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.01):#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0))
+                .frame(minWidth: 0,maxWidth: .infinity, minHeight: 0,maxHeight: .infinity)
+                .onTapGesture {
+                    self.isShow.menu.toggle()
+                }
             
             //MenuOptions
-            VStack(alignment: .leading, spacing:35) {
+            VStack(alignment: .leading, spacing:25) {
                 
                 ForEach(SideMenuViewModel.allCases,id:\.self){ option in
+                    
                     SideMenuOption(viewModel: option)
+                        .onTapGesture {
+                            self.isShow.pages = option.title
+                            self.isShow.menu = false
+                        }
+                    
                 }
                 Spacer()
                 
             }
-            .padding(.top,35)
+            .padding(.top,45)
             .padding(.leading, 55)
             .frame(minWidth:0,maxWidth: 360)
             .background(Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)).opacity(0.9))
@@ -37,9 +44,11 @@ struct SideMenuView: View {
             .padding(.trailing,60)
             .shadow(color:Color(#colorLiteral(red: 0.5176470588, green: 0.3176470588, blue: 0.01568627451, alpha: 0.88)), radius: 10, x:8,y:20 )
             .animation(.easeInOut)
-            .offset(x: show ? -20:-UIScreen.main.bounds.width)
+            .offset(x: isShow.menu ? -20:-UIScreen.main.bounds.width)
+            
             
         }
+        //        .navigationBarHidden(show)
         
     }
     
@@ -59,6 +68,7 @@ struct SideMenuOption: View {
                 .frame(width: 32, height: 32)
             //name
             Text(viewModel.title)
+                .foregroundColor(Color(#colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)))
                 .font(.system(size: 20.0, weight: .regular))
             
             Spacer()
