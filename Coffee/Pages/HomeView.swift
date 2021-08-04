@@ -11,7 +11,7 @@ struct HomeView: View {
     @State private var isShowMenu = false
     @State var showCart = false
     @State var searchItem = ""
-    
+    var items = itemsData
     init(){
         navBarInit()
     }
@@ -22,7 +22,7 @@ struct HomeView: View {
                     
                     Slideshow()
                     
-                    SearchBar(searchItem: $searchItem)
+                    SearchBarToNewView(searchItem: $searchItem, items:items)
                         .padding(.horizontal,68)
                         .padding(.vertical,18)
                     
@@ -60,7 +60,7 @@ struct ExDivider:View {
         
         Rectangle()
             .fill(Color(#colorLiteral(red: 0.2235294118, green: 0.1803921569, blue: 0.1529411765, alpha: 1)))
-            .frame(width: 0.8, height: 24)
+            .frame(width: 1, height: 24)
             .shadow(color:Color(#colorLiteral(red: 0.4352941176, green: 0.3764705882, blue: 0.3411764706, alpha: 1)), radius: 2 ,y:1)
             .shadow(color:Color(#colorLiteral(red: 0.1254901961, green: 0.1215686275, blue: 0.1176470588, alpha: 0.5)), radius: 2 ,y:-1)
         
@@ -68,28 +68,22 @@ struct ExDivider:View {
     }
 }
 
-struct SearchBar: View {
+struct SearchBarToNewView: View {
     @Binding var searchItem:String
-    
+    var items:[Item]
     var body: some View {
         HStack(alignment: .center){
-            Image("filter")
-                .resizable()
-                .frame(width: 22, height: 22)
-                .foregroundColor(Color("iconGray"))
+            
             HStack(spacing: 0.0) {
                 
                 TextField("Search Here", text: $searchItem)
                 
-                Divider()
-                    .foregroundColor(Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)))
-                    .padding(.vertical,6)
+                
                 ExDivider()
                 
                 
-                
                 NavigationLink(
-                    destination: MenuView(title:searchItem,items:search(searchText: searchItem)).environmentObject(Show()),
+                    destination: MenuView(title:searchItem,items:search(items:items,searchText: searchItem),itemsAll: search(items:items,searchText: searchItem)).environmentObject(Show()),
                     label: {
                         Image(systemName: "magnifyingglass")
                             .resizable()
@@ -119,7 +113,9 @@ struct SearchBar: View {
                 
             })
             .cornerRadius(5)
+            
         }
+        .padding(.leading,25)
     }
 }
 
@@ -140,7 +136,7 @@ struct MenuScroll: View {
                     ForEach(menus) { item in
                         NavigationLink(
                             
-                            destination: MenuView(title:item.title,items: menuSearch(type: item.type)).environmentObject(Show()),
+                            destination: MenuView(title:item.title,items: menuSearch(type: item.type),itemsAll: menuSearch(type: item.type)).environmentObject(Show()),
                             
                             label: {
                                 MenuCategory(item: item)

@@ -12,16 +12,24 @@ struct EntryView: View {
     var body: some View {
         NavigationView{
             
-            ZStack{ switch isShow.pages {
-            case "首頁" : HomeView()
-            case "通知" : NotificationView()
-            default:
-                HomeView()
-            }
-            SideMenuView(show:$isShow.menu)}
-           
+            ZStack{
+                
+                switch isShow.pages {
+                case "會員" : HomeView()
+                case "首頁" : HomeView()//------------yet
+                case "通知" : NotificationView()
+                case "訂位" : HomeView()//------------yet
+                case "歷史訂位" : BookingHistoryView()
+                case "歷史訂單" : OrderHistoryView()
+                case "活動" : EventView()
+                case "咖啡知識" : KnowledgeView()
+                default:
+                    HomeView()
+                }
+                
+                SideMenuView(show:$isShow.menu)}
+            
         }
-        
         
     }
 }

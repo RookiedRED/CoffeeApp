@@ -18,8 +18,13 @@
 		129B977826B3944C00F3DB20 /* itemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129B977726B3944C00F3DB20 /* itemView.swift */; };
 		129B977E26B3D7FC00F3DB20 /* MenuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129B977D26B3D7FC00F3DB20 /* MenuModel.swift */; };
 		129B978026B796AC00F3DB20 /* EntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129B977F26B796AC00F3DB20 /* EntryView.swift */; };
-		129B978226B7CB6300F3DB20 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129B978126B7CB6300F3DB20 /* CardView.swift */; };
+		129B978226B7CB6300F3DB20 /* CardViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129B978126B7CB6300F3DB20 /* CardViews.swift */; };
 		129B978626B7D39600F3DB20 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129B978526B7D39600F3DB20 /* NotificationView.swift */; };
+		129B978A26B7DA6B00F3DB20 /* OrderHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129B978926B7DA6B00F3DB20 /* OrderHistoryView.swift */; };
+		129B978C26B7DA7B00F3DB20 /* EventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129B978B26B7DA7B00F3DB20 /* EventView.swift */; };
+		129B978E26B8DB1500F3DB20 /* BookingHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129B978D26B8DB1500F3DB20 /* BookingHistoryView.swift */; };
+		129B979026B90B5E00F3DB20 /* KnowledgeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129B978F26B90B5E00F3DB20 /* KnowledgeView.swift */; };
+		129B979426BA253400F3DB20 /* SortSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129B979326BA253400F3DB20 /* SortSettingView.swift */; };
 		12D5FB7426A8FDCF00B275B1 /* CoffeeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D5FB7326A8FDCF00B275B1 /* CoffeeApp.swift */; };
 		12D5FB7826A8FDD100B275B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 12D5FB7726A8FDD100B275B1 /* Assets.xcassets */; };
 		12D5FB7B26A8FDD100B275B1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 12D5FB7A26A8FDD100B275B1 /* Preview Assets.xcassets */; };
@@ -39,8 +44,13 @@
 		129B977726B3944C00F3DB20 /* itemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = itemView.swift; sourceTree = "<group>"; };
 		129B977D26B3D7FC00F3DB20 /* MenuModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuModel.swift; sourceTree = "<group>"; };
 		129B977F26B796AC00F3DB20 /* EntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryView.swift; sourceTree = "<group>"; };
-		129B978126B7CB6300F3DB20 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		129B978126B7CB6300F3DB20 /* CardViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViews.swift; sourceTree = "<group>"; };
 		129B978526B7D39600F3DB20 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
+		129B978926B7DA6B00F3DB20 /* OrderHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryView.swift; sourceTree = "<group>"; };
+		129B978B26B7DA7B00F3DB20 /* EventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventView.swift; sourceTree = "<group>"; };
+		129B978D26B8DB1500F3DB20 /* BookingHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookingHistoryView.swift; sourceTree = "<group>"; };
+		129B978F26B90B5E00F3DB20 /* KnowledgeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnowledgeView.swift; sourceTree = "<group>"; };
+		129B979326BA253400F3DB20 /* SortSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortSettingView.swift; sourceTree = "<group>"; };
 		12D5FB7026A8FDCF00B275B1 /* Coffee.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Coffee.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		12D5FB7326A8FDCF00B275B1 /* CoffeeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeApp.swift; sourceTree = "<group>"; };
 		12D5FB7726A8FDD100B275B1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -68,7 +78,8 @@
 				129B976B26B12B9300F3DB20 /* SideMenuView.swift */,
 				12D5FB8426A8FE3700B275B1 /* SideBarAndHeader.swift */,
 				129B975D26AC5F4200F3DB20 /* Slideshow.swift */,
-				129B978126B7CB6300F3DB20 /* CardView.swift */,
+				129B978126B7CB6300F3DB20 /* CardViews.swift */,
+				129B979326BA253400F3DB20 /* SortSettingView.swift */,
 			);
 			path = "Views&Components";
 			sourceTree = "<group>";
@@ -91,6 +102,10 @@
 				12D5FB8226A8FDF900B275B1 /* HomeView.swift */,
 				129B977126B1445200F3DB20 /* MenuView.swift */,
 				129B978526B7D39600F3DB20 /* NotificationView.swift */,
+				129B978926B7DA6B00F3DB20 /* OrderHistoryView.swift */,
+				129B978D26B8DB1500F3DB20 /* BookingHistoryView.swift */,
+				129B978B26B7DA7B00F3DB20 /* EventView.swift */,
+				129B978F26B90B5E00F3DB20 /* KnowledgeView.swift */,
 			);
 			path = Pages;
 			sourceTree = "<group>";
@@ -215,6 +230,7 @@
 				129B975E26AC5F4200F3DB20 /* Slideshow.swift in Sources */,
 				129B977626B3919200F3DB20 /* ItemModel.swift in Sources */,
 				12D5FB8326A8FDF900B275B1 /* HomeView.swift in Sources */,
+				129B978C26B7DA7B00F3DB20 /* EventView.swift in Sources */,
 				129B977826B3944C00F3DB20 /* itemView.swift in Sources */,
 				129B976C26B12B9300F3DB20 /* SideMenuView.swift in Sources */,
 				129B978626B7D39600F3DB20 /* NotificationView.swift in Sources */,
@@ -222,12 +238,16 @@
 				129B977226B1445200F3DB20 /* MenuView.swift in Sources */,
 				129B975C26AC4E0200F3DB20 /* BlurView.swift in Sources */,
 				12D5FB7426A8FDCF00B275B1 /* CoffeeApp.swift in Sources */,
+				129B978A26B7DA6B00F3DB20 /* OrderHistoryView.swift in Sources */,
 				129B977426B144C800F3DB20 /* SideMenuShow.swift in Sources */,
 				129B977E26B3D7FC00F3DB20 /* MenuModel.swift in Sources */,
 				12D5FB8526A8FE3700B275B1 /* SideBarAndHeader.swift in Sources */,
+				129B978E26B8DB1500F3DB20 /* BookingHistoryView.swift in Sources */,
 				129B977026B12BD000F3DB20 /* SideMenuViewModel.swift in Sources */,
+				129B979026B90B5E00F3DB20 /* KnowledgeView.swift in Sources */,
 				129B976A26B122B100F3DB20 /* NavBarAppearance.swift in Sources */,
-				129B978226B7CB6300F3DB20 /* CardView.swift in Sources */,
+				129B978226B7CB6300F3DB20 /* CardViews.swift in Sources */,
+				129B979426BA253400F3DB20 /* SortSettingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

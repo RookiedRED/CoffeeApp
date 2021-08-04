@@ -32,48 +32,64 @@ let itemsData = [
     Item(name: "美式漢堡", price: 110, image: "MenuImage.hot", level: 5,type:"Meal"),
     Item(name: "蛋糕套餐", price: 160, image: "MenuImage.main", level: 5,type:"Set"),
     
-
 ]
 
-
-func search(searchText:String) -> [Item] {
+//回傳所查找字串的菜單
+func search(items:[Item],searchText:String) -> [Item] {
     
-    let searchData :[Item] = itemsData
-    var searchReturn = [Item]()
+    let searchData :[Item] = items
+    let searchReturn = searchData.filter{ item in item.name.contains(searchText) }
     
-    if searchText == "" {return searchData}
-    for i in 0..<searchData.count{
-        if searchData[i].name.contains(searchText) {
-            searchReturn.append(searchData[i])
-        }
-    }
+    if searchText == "" { return searchData }
     
     return searchReturn
 }
 
 
+//回傳所選種類的菜單
 func menuSearch(type:String) -> [Item] {
     
     let typeData:[Item] = itemsData
     var typeReturn = [Item]()
     
-    if type == "All"{
+    if type == "All"{ //指標是"ALL"則回傳全部菜單
         return typeData
     }
     else if type == "Hot"{
-        for i in 0..<typeData.count{
-            if typeData[i].level > 4{
-                typeReturn.append(typeData[i])
-            }
-        }
+        
+        typeReturn = typeData.filter{ item in item.level > 4 }
     }
     else{
-        for i in 0..<typeData.count{
-            if type == typeData[i].type{
-                typeReturn.append(typeData[i])
+        
+        typeReturn = typeData.filter{ item in item.type == type}
+    }
+    return typeReturn
+}
+
+func sort(items:[Item],type:String,order:Bool) ->[Item]{
+    
+    if type == "價格"{
+        if order == true{
+            return items.sorted { item1, item2 in
+                item1.price > item2.price
+            } 
+        }else{
+            return items.sorted { item1, item2 in
+                item1.price < item2.price
             }
         }
+    }else if type == "評價分數"{
+        if order == true{
+            return items.sorted { item1, item2 in
+                item1.level > item2.level
+            }
+        }else{
+            return items.sorted { item1, item2 in
+                item1.level < item2.level
+            }
+        }
+    }else{
+        return items
     }
     
-    return typeReturn
 }
