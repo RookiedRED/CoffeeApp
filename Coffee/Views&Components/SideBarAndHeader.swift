@@ -12,33 +12,13 @@ struct testView:View {
     var body: some View{
         ZStack {
             VStack {
-                SideBarAndHeader(showMenu: $showMenu, showCart: $showCart)
-                Spacer()
-            }
-            .frame(maxWidth:.infinity,maxHeight: .infinity)
-            .background(LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 0.3678437173, green: 0.2994093597, blue: 0.2702392936, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1))]), startPoint: .top, endPoint: .bottom))
-            .blur(radius: showMenu||showCart ? 10:0)
-            .animation(.easeInOut)
-            
-            
-        }
-    }
-}
-
-struct SideBarAndHeader: View {
-    
-    @Binding var showMenu:Bool
-    @Binding var showCart:Bool
-    var body: some View {
-        ZStack {
-            VStack(spacing: 0.0) {
                 HStack{
                     
                     HeaderButton(show:$showMenu, iconImage: "menu")//Menu
                         .onTapGesture {
                             self.showMenu.toggle()
                         }
-                    BackButton()
+                    BackButton(backTitle:"首頁")
                     Spacer()
                     
                     Text("首頁")
@@ -52,17 +32,18 @@ struct SideBarAndHeader: View {
                             self.showCart.toggle()
                         }
                 }
-                .frame(width: UIScreen.main.bounds.width, height: 55)
-                
-                Divider().background(Color.black)
-                
+                Spacer()
             }
-            
+            .frame(maxWidth:.infinity,maxHeight: .infinity)
+            .background(LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 0.3678437173, green: 0.2994093597, blue: 0.2702392936, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1))]), startPoint: .top, endPoint: .bottom))
+            .blur(radius: showMenu||showCart ? 10:0)
+            .animation(.easeInOut)
             
             
         }
     }
 }
+
 
 struct SideBarAndHeader_Previews: PreviewProvider {
     static var previews: some View {
@@ -74,7 +55,7 @@ struct SideBarAndHeader_Previews: PreviewProvider {
 
 struct BackButton:View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    
+    let backTitle: String
     var body: some View {
         ZStack {
 
@@ -86,7 +67,7 @@ struct BackButton:View {
                         .resizable()
                         .foregroundColor(Color("iconGray"))
                         .frame(width: 15, height: 20)
-                    Text("首頁")
+                    Text(backTitle)
                         .foregroundColor(Color("iconGray"))
                 }
             })

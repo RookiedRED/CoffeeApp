@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct Slideshow: View {
+    let screenWidth = UIScreen.main.bounds.width
+    let screenHeight = UIScreen.main.bounds.height
     private var numberOfImages = 5
     private let timer = Timer.publish(every: 2.5, on: .main, in: .common).autoconnect()
     @State private var currentIndex = 0
@@ -22,14 +24,15 @@ struct Slideshow: View {
                         .tag(num)
                 }
             }
+
             .tabViewStyle(PageTabViewStyle())
-            .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height*2/5)
+            .frame(width: screenWidth, height: screenHeight/3)
             .onReceive(timer, perform: { _ in
                 //set the page to be next image
-                
                 currentIndex = currentIndex < numberOfImages ? currentIndex + 1 : 0
                
             })
+        
         
         
     }

@@ -29,7 +29,13 @@ struct MenuView: View {
                 ScrollView(.vertical,showsIndicators:false) {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 160))], spacing: 12, content: {
                         ForEach(items){i in
-                           itemView(item: i)
+                            NavigationLink(
+                                destination: OrderView(itemDetail:ItemDetail(name: i.name, price: i.price, image: i.image, ice: 0.5, sugar: 0.5, milk: 0.5, number: 1)).environmentObject(Show())
+                                ,
+                                label: {
+                                    itemView(item: i)
+                                })
+                           
                         }
                     })
                     
@@ -38,17 +44,17 @@ struct MenuView: View {
             }
             .frame(maxWidth:.infinity,maxHeight: .infinity)
             .background(LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 0.3678437173, green: 0.2994093597, blue: 0.2702392936, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1))]), startPoint: .top, endPoint: .bottom))
-            .blur(radius: isShowSortSetting ? 8:0)
+            .blur(radius: isShowSortSetting || isShow.cart ? 8:0)
             .animation(.easeInOut)
             .navigationTitle(title)
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationBarItems(leading:BackButton()
-                                    .padding(.bottom,10),trailing:HeaderButton(show: $isShow.menu, iconImage: "cart").padding(.bottom,10))
+            .navigationBarItems(leading:BackButton(backTitle:"首頁")
+                                    .padding(.bottom,10),trailing:HeaderButton(show: $isShow.cart, iconImage: "cart").padding(.bottom,10))
             .navigationBarBackButtonHidden(true)
             
             SortSettingView(isShow: $isShowSortSetting, items: $items,itemsOringin: itemsAll)
             
         }
+        .edgesIgnoringSafeArea(.bottom)
     }
 }
 

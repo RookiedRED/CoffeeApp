@@ -14,6 +14,7 @@ struct CoffeeApp: App {
     var body: some Scene {
         
         WindowGroup {
+//            CurveSlider()
             EntryView().environmentObject(Show())
         }
     }

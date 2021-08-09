@@ -8,39 +8,33 @@
 import SwiftUI
 struct HomeView: View {
     @EnvironmentObject var isShow : Show
-    @State private var isShowMenu = false
-    @State var showCart = false
     @State var searchItem = ""
     var items = itemsData
-    init(){
-        navBarInit()
-    }
+    
+    let screenHeight = UIScreen.main.bounds.height
+    
     var body: some View {
-       
-            ZStack {
-                VStack(spacing: 0.0) {
-                    
-                    Slideshow()
-                    
-                    SearchBarToNewView(searchItem: $searchItem, items:items)
-                        .padding(.horizontal,68)
-                        .padding(.vertical,18)
-                    
-                    Spacer()
-                    MenuScroll()
-                }
-                .frame(maxWidth:.infinity,maxHeight: .infinity)
-                .background(LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 0.3678437173, green: 0.2994093597, blue: 0.2702392936, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1))]), startPoint: .top, endPoint: .bottom))
-                .blur(radius: isShow.menu||isShow.cart ? 10:0)
-                .animation(.easeInOut)
-                .navigationTitle("首頁")
-                .navigationBarTitleDisplayMode(.inline)
-                .navigationBarItems(leading:HeaderButton(show: $isShow.menu, iconImage: "menu").padding(.bottom,10),trailing: HeaderButton(show: $isShow.cart, iconImage: "cart").padding(.bottom,10))
-                
-
-            }
+        
+        
+        VStack(spacing: 0) {
             
+            Slideshow()
             
+            SearchBarToNewView(searchItem: $searchItem, items:items)
+                .padding(.horizontal,68)
+                .padding(.vertical,screenHeight/25)
+            
+            MenuScroll()
+        }
+        
+        
+        .navigationTitle("首頁")
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationBarItems(leading:HeaderButton(show: $isShow.menu, iconImage: "menu").padding(.bottom,10),trailing: HeaderButton(show: $isShow.cart, iconImage: "cart").padding(.bottom,10))
+        
+        
+        
+        
         
         
         
@@ -93,7 +87,8 @@ struct SearchBarToNewView: View {
                     })
                 
                 
-            }.font(.subheadline)
+            }
+            .font(.subheadline)
             .padding(.leading)
             .frame(height: 36)
             .background(ZStack {
@@ -121,15 +116,17 @@ struct SearchBarToNewView: View {
 
 
 struct MenuScroll: View {
+    
+    let screenWidth = UIScreen.main.bounds.width
     var menus = menusData
     
     var body: some View {
         VStack(alignment: .leading, spacing: 2.0) {
             Text("菜單分類")
-                .font(.system(size: 24))
+                .font(.system(size: UIScreen.main.bounds.width*0.064))
                 .fontWeight(.bold)
                 .foregroundColor(.white)
-                .padding(.leading,10)
+                .padding(.leading,10*UIScreen.main.bounds.width/375)
             
             ScrollView(.horizontal,showsIndicators: false) {
                 HStack(spacing:20) {
@@ -143,7 +140,7 @@ struct MenuScroll: View {
                             })
                     }
                 }
-                .padding(10)
+                .padding(10*UIScreen.main.bounds.width/375)
                 
                 Spacer()
             }
@@ -153,7 +150,7 @@ struct MenuScroll: View {
 
 
 struct MenuCategory: View {
-    
+    let screenWidth = UIScreen.main.bounds.width
     var item = Menu(title: "Fast", image: "MenuImage.hot",type:"Hot")
     
     
@@ -163,11 +160,11 @@ struct MenuCategory: View {
             Image(item.image)
                 .resizable()
                 .scaledToFill()
-                .frame(width: 115, height: 115)
+                .frame(width: screenWidth/3, height: screenWidth/3)
                 .cornerRadius(5)
             
             Text(item.title)
-                .fontWeight(.bold)
+                .font(.system(size: screenWidth*0.048, weight: .bold))
                 .foregroundColor(Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)))
             
         }

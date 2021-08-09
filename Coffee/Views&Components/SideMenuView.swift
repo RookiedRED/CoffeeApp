@@ -10,6 +10,9 @@ import SwiftUI
 struct SideMenuView: View {
     @EnvironmentObject var isShow : Show
     @Binding var show : Bool
+    
+    let screenHeight = UIScreen.main.bounds.height
+    
     var body: some View {
         
         ZStack{
@@ -22,7 +25,7 @@ struct SideMenuView: View {
                 }
             
             //MenuOptions
-            VStack(alignment: .leading, spacing:25) {
+            VStack(alignment: .leading, spacing:screenHeight/22) {
                 
                 ForEach(SideMenuViewModel.allCases,id:\.self){ option in
                     
