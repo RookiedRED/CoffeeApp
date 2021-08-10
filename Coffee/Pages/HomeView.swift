@@ -32,10 +32,7 @@ struct HomeView: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(leading:HeaderButton(show: $isShow.menu, iconImage: "menu").padding(.bottom,10),trailing: HeaderButton(show: $isShow.cart, iconImage: "cart").padding(.bottom,10))
         
-        
-        
-        
-        
+
         
         
     }

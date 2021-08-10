@@ -54,6 +54,7 @@ struct MenuView: View {
             SortSettingView(isShow: $isShowSortSetting, items: $items,itemsOringin: itemsAll)
             
         }
+        
         .edgesIgnoringSafeArea(.bottom)
     }
 }

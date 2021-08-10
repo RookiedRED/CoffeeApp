@@ -25,7 +25,7 @@ struct EntryView: View {
                     //各分頁顯示
                     switch isShow.pages {
                     
-                    case "會員" : HomeView()
+                    case "會員" : LoginView()
                     case "首頁" : HomeView()
                     case "通知" : NotificationView()
                     case "訂位" : HomeView()//------------yet

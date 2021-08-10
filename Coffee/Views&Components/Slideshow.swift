@@ -29,8 +29,9 @@ struct Slideshow: View {
             .frame(width: screenWidth, height: screenHeight/3)
             .onReceive(timer, perform: { _ in
                 //set the page to be next image
-                currentIndex = currentIndex < numberOfImages ? currentIndex + 1 : 0
-               
+                withAnimation {
+                    currentIndex = currentIndex < numberOfImages ? currentIndex + 1 : 0
+                }
             })
         
         
