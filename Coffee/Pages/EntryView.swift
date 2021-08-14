@@ -9,14 +9,22 @@ import SwiftUI
 
 struct EntryView: View {
     @EnvironmentObject var isShow : Show
+    @EnvironmentObject var user: UserStore
     
     //初始化NavigationBar的外觀
     init(){
         navBarInit()
     }
     
+    func UserView(isLogged:Bool) -> AnyView {
+        if isLogged{
+            return AnyView(UserInformationView().environmentObject(user))
+        }else{
+            return AnyView(LoginView().environmentObject(user))
+        }
+    }
+    
     var body: some View {
-        
         NavigationView{
             
             ZStack {
@@ -25,7 +33,7 @@ struct EntryView: View {
                     //各分頁顯示
                     switch isShow.pages {
                     
-                    case "會員" : LoginView()
+                    case "會員" : UserView(isLogged:(user.keepLogging))
                     case "首頁" : HomeView()
                     case "通知" : NotificationView()
                     case "訂位" : HomeView()//------------yet
@@ -33,6 +41,7 @@ struct EntryView: View {
                     case "歷史訂單" : OrderHistoryView()
                     case "活動" : EventView()
                     case "咖啡知識" : KnowledgeView()
+                    case "登出" : LoginView()
                     default:
                         HomeView()
                     }
@@ -60,6 +69,8 @@ struct EntryView: View {
 
 struct entryView_Previews: PreviewProvider {
     static var previews: some View {
-        EntryView().environmentObject(Show())
+        EntryView()
+            .environmentObject(Show())
+            .environmentObject(UserStore())
     }
 }

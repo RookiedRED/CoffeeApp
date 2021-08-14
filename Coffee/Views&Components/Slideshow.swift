@@ -12,19 +12,20 @@ struct Slideshow: View {
     let screenHeight = UIScreen.main.bounds.height
     private var numberOfImages = 5
     private let timer = Timer.publish(every: 2.5, on: .main, in: .common).autoconnect()
-    @State private var currentIndex = 0
+    @State var currentIndex = 0
     
     var body: some View {
 
             TabView(selection: $currentIndex){
-                ForEach(0..<numberOfImages){num in
+                ForEach(0..<numberOfImages){ num in
                     Image("Banner\(num)")
                         .resizable()
-                        .scaledToFill()
+                        .scaledToFit()
                         .tag(num)
+                        
                 }
             }
-
+            .background(Color.white.opacity(0.5))
             .tabViewStyle(PageTabViewStyle())
             .frame(width: screenWidth, height: screenHeight/3)
             .onReceive(timer, perform: { _ in

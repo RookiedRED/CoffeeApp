@@ -59,7 +59,7 @@ struct CurveSlider: View {
                                     }
                                 }))
                     .rotationEffect(Angle(degrees:-90-Double(range)/2))
-//                Text("\(Int(progress*100))")
+//                Text("\(progress*100)")
 //                    .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
 //                    .offset(y:-screenWidth+50)
             }
@@ -82,7 +82,7 @@ struct CurveSlider: View {
             let progress = angle/36
             
             //震動效果
-            let progressInt = Int(progress*10000)
+            let progressInt = Int(progress*1000)
             if progressInt%10 == 0 && progressInt > 0 && progressInt/10 < 100 {
                 impact(style: .light)
             }

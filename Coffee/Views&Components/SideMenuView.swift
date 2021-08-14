@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SideMenuView: View {
     @EnvironmentObject var isShow : Show
+    @EnvironmentObject var user: UserStore
     @Binding var show : Bool
     
     let screenHeight = UIScreen.main.bounds.height
@@ -29,11 +30,19 @@ struct SideMenuView: View {
                 
                 ForEach(SideMenuViewModel.allCases,id:\.self){ option in
                     
-                    SideMenuOption(viewModel: option)
-                        .onTapGesture {
-                            self.isShow.pages = option.title
-                            self.isShow.menu = false
+                    Button(action: {
+                        if option.title == "登出" {
+                            self.user.keepLogging = false
+                            UserDefaults.standard.setValue(false, forKey: "keepLogging")
+                            self.user.email = ""
+                            UserDefaults.standard.setValue("", forKey: "email")
                         }
+                        self.isShow.pages = option.title
+                        self.isShow.menu = false
+                    }, label: {
+                        SideMenuOption(viewModel: option)
+                    })
+                    
                     
                 }
                 Spacer()
@@ -51,7 +60,6 @@ struct SideMenuView: View {
             
             
         }
-        //        .navigationBarHidden(show)
         
     }
     

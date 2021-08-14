@@ -18,3 +18,5 @@ struct ItemDetail: Identifiable {
     var milk : CGFloat
     var number : Int
 }
+
+var ItemsInCart=[ItemDetail]()

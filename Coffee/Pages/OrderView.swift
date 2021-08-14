@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct OrderView: View {
-    @Environment(\.presentationMode) var presentionMode: Binding<PresentationMode>
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var isShow : Show
     let screenWidth = UIScreen.main.bounds.width
     let screenHeight = UIScreen.main.bounds.height
@@ -215,7 +215,8 @@ struct OrderView: View {
 struct OrderView_Previews: PreviewProvider {
     static var previews: some View {
         VStack(spacing: 0.0) {
-            OrderView().environmentObject(Show())
+            OrderView()
+                .environmentObject(Show())
         }
     }
 }

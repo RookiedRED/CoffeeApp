@@ -8,17 +8,19 @@
 import SwiftUI
 import Combine
 
-class Show :ObservableObject{
+class Show:ObservableObject{
     
     @Published var menu:Bool
     @Published var cart:Bool
     @Published var pages:String
+    @Published var alert:Bool
     
     
     init() {
         menu = false
         cart = false
-        pages = "Home"
+        pages = "首頁"
+        alert = false
         
     }
     
