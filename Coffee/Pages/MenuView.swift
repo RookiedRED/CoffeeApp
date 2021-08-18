@@ -11,6 +11,7 @@ struct MenuView: View {
     
     @Environment(\.presentationMode) var presentionMode: Binding<PresentationMode>
     @EnvironmentObject var isShow : Show
+    @EnvironmentObject var user: UserStore
     @EnvironmentObject var itemsInCart: ItemsInCart
     @State var searchItem = ""
     @State var isShowSortSetting = false
@@ -32,8 +33,9 @@ struct MenuView: View {
                         ForEach(items){i in
                             NavigationLink(
                                 destination: OrderView(itemDetail:ItemDetail(name: i.name, price: i.price, image: i.image, ice: 0.5, sugar: 0.5, milk: 0.5, number: 1))
-                                    .environmentObject(Show())
-                                    .environmentObject(self.itemsInCart)
+                                    .environmentObject(isShow)
+                                    .environmentObject(itemsInCart)
+                                    .environmentObject(user)
                                 ,
                                 label: {
                                     itemView(item:i).contextMenu(ContextMenu(menuItems: {
@@ -56,8 +58,11 @@ struct MenuView: View {
             .navigationBarItems(leading:BackButton(backTitle:"首頁")
                                     .padding(.bottom,10),
                                 trailing:HeaderButton(show: $isShow.cart, iconImage: "cart",itemsInCartNum: itemsInCart.items.count)
-                                    .padding(.bottom,10).sheet(isPresented:$isShow.cart){
-                                        CartView().environmentObject(self.itemsInCart)
+                                    .padding(.bottom,10)
+                                    .sheet(isPresented:$isShow.cart){
+                                        CartView()
+                                            .environmentObject(itemsInCart)
+                                            .environmentObject(user)
                                     })
             .navigationBarBackButtonHidden(true)
             
@@ -74,6 +79,7 @@ struct MenuMain_Previews: PreviewProvider {
         MenuView(itemsAll: itemsData)
             .environmentObject(Show())
             .environmentObject(ItemsInCart())
+            .environmentObject(UserStore())
     }
 }
 

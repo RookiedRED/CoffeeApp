@@ -36,6 +36,10 @@ struct SideMenuView: View {
                             UserDefaults.standard.setValue(false, forKey: "keepLogging")
                             self.user.email = ""
                             UserDefaults.standard.setValue("", forKey: "email")
+                            self.user.name = ""
+                            UserDefaults.standard.setValue("", forKey: "name")
+                            self.user.phoneNumber = ""
+                            UserDefaults.standard.setValue("", forKey: "phoneNumber")
                         }
                         self.isShow.pages = option.title
                         self.isShow.menu = false

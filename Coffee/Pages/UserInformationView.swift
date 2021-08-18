@@ -19,24 +19,10 @@ struct UserInformationView: View {
     let db = Firestore.firestore()
 
     
-    func loadUserInformation(){
-        db.collection("Users").document(user.email).getDocument{ (document, error) in
-            if let document = document, document.exists {
-                let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
-                self.userEmail = document.documentID
-                self.userName = document.data()!["name"] as! String
-                self.userPhoneNumber = document.data()!["phoneNumber"] as! String
-                print("Document data: \(dataDescription)")
-            } else {
-                print("Document does not exist")
-            }
-        }
-    }
-    
     var body: some View {
         
         VStack(spacing: 24.0) {
-            Text(userName)
+            Text(user.name)
                 .font(.system(size: screenWidth * 0.08, weight: .bold))
                 .foregroundColor(.white)
             ExDivider2()
@@ -50,7 +36,7 @@ struct UserInformationView: View {
                         .font(.system(size: screenWidth * 0.06, weight: .regular))
                         .frame(width:screenWidth * 0.2,alignment: .leading)
                         .foregroundColor(.white)
-                    Text(userPhoneNumber)
+                    Text(user.phoneNumber)
                         .font(.system(size: screenWidth * 0.06, weight: .regular))
                         .foregroundColor(.white)
                     
@@ -60,7 +46,7 @@ struct UserInformationView: View {
                         .font(.system(size: screenWidth * 0.06, weight: .regular))
                         .frame(width:screenWidth * 0.2,alignment: .leading)
                         .foregroundColor(.white)
-                    Text(userEmail)
+                    Text(user.email)
                         .font(.system(size: screenWidth * 0.06, weight: .regular))
                         .foregroundColor(.white)
                     
@@ -72,7 +58,7 @@ struct UserInformationView: View {
             
             Spacer()
             Button(action: {
-                loadUserInformation()
+
             }) {
                 Text("修改會員資料")
                     .font(.system(size: screenWidth*0.06, weight:.bold))
@@ -104,9 +90,6 @@ struct UserInformationView: View {
         .padding(.vertical,60)
         .navigationBarItems(leading:HeaderButton(show: $isShow.menu, iconImage: "menu").padding(.bottom,10))
         .navigationBarBackButtonHidden(true)
-        .onAppear(perform: {
-            loadUserInformation()
-        })
 
     }
 }

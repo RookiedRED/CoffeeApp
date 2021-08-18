@@ -12,10 +12,7 @@ struct EntryView: View {
     @EnvironmentObject var user: UserStore
     @EnvironmentObject var itemsInCart: ItemsInCart
     
-    //初始化NavigationBar的外觀
-    init(){
-        navBarInit()
-    }
+
     
     //判斷會員是否登入來回傳登入或會員畫面
     func UserView(isLogged:Bool) -> AnyView {
@@ -24,6 +21,10 @@ struct EntryView: View {
         }else{
             return AnyView(LoginView().environmentObject(user))
         }
+    }
+    
+    func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
     
     var body: some View {
@@ -48,11 +49,14 @@ struct EntryView: View {
                     }
                     
                 }
+                .environmentObject(user)
                 .frame(maxWidth:.infinity,maxHeight: .infinity)
                 .background(LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 0.3678437173, green: 0.2994093597, blue: 0.2702392936, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1))]), startPoint: .top, endPoint: .bottom))
+                .onTapGesture{
+                    hideKeyboard()
+                }
                 .blur(radius: isShow.menu ? 10:0)
                 .animation(.easeInOut)
-                
                 //側邊菜單欄
                 SideMenuView(show:$isShow.menu)
                 

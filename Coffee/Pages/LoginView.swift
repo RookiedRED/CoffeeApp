@@ -34,18 +34,33 @@ struct LoginView: View {
                 self.alertMessage = e.localizedDescription
                 self.isShow.alert = true
             }else{
-                if self.keepLoggingCheck {
-                    self.user.keepLogging = true
-                    self.user.email = self.email
-                    UserDefaults.standard.setValue(true, forKey: "keepLogging")
-                    UserDefaults.standard.setValue(self.email, forKey: "email")
-                }else {
-                    self.user.keepLogging = true
-                    self.user.email = self.email
-                }
+                
+                self.user.keepLogging = true
+                self.user.email = self.email
+                loadUserInformation()
+                
+                
                 self.isShow.pages = "首頁"
             }
             
+        }
+    }
+    
+    //載入用戶資料
+    func loadUserInformation(){
+        db.collection("Users").document(user.email).getDocument{ (document, error) in
+            if let document = document, document.exists {
+                self.user.name = document.data()!["name"] as! String
+                self.user.phoneNumber = document.data()!["phoneNumber"] as! String
+                if self.keepLoggingCheck {
+                    UserDefaults.standard.setValue(true, forKey: "keepLogging")
+                    UserDefaults.standard.setValue(self.email, forKey: "email")
+                    UserDefaults.standard.setValue(self.user.name, forKey: "name")
+                    UserDefaults.standard.setValue(self.user.phoneNumber, forKey: "phoneNumber")
+                }
+            } else {
+                print("Document does not exist")
+            }
         }
     }
     

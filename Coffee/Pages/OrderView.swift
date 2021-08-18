@@ -11,6 +11,7 @@ struct OrderView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var isShow : Show
     @EnvironmentObject var itemsInCart: ItemsInCart
+    @EnvironmentObject var user: UserStore
     let screenWidth = UIScreen.main.bounds.width
     let screenHeight = UIScreen.main.bounds.height
     @State var itemDetail : ItemDetail = ItemDetail(name: "拿鐵", price: 70, image: "ItemCoffee", ice: 0.7, sugar: 0.5, milk: 0.5, number: 1)
@@ -214,7 +215,9 @@ struct OrderView: View {
                             trailing:HeaderButton(show: $isShow.cart, iconImage: "cart",itemsInCartNum: itemsInCart.items.count)
                                 .padding(.bottom,10)
                                 .sheet(isPresented:$isShow.cart){
-                                    CartView().environmentObject(self.itemsInCart)
+                                    CartView()
+                                        .environmentObject(itemsInCart)
+                                        .environmentObject(user)
                                 })
         .navigationBarBackButtonHidden(true)
         

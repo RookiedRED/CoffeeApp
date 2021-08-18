@@ -6,14 +6,17 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct CartView: View {
     @EnvironmentObject var itemsInCart: ItemsInCart
+    @EnvironmentObject var user: UserStore
     let screenWidth = UIScreen.main.bounds.width
     let screenHeight = UIScreen.main.bounds.height
     @State var takeDate = Date()
     @State var totalPrice:Int = 0
     
+    let db = Firestore.firestore()
     //初始化List背景顏色
     init(){
         UITableView.appearance().backgroundColor = UIColor(red: 21/255,green: 22/255, blue: 23/255, alpha: 1)
@@ -41,6 +44,32 @@ struct CartView: View {
             }
         }
     }
+
+//    
+//    func transDataForSend(items:[ItemDetail])->[ItemDataSend]{
+//        var dataForSend = [ItemDataSend]()
+//        
+//        for i in 0..<items.count {
+//            let new = ItemDataSend(name: items[i].name, price: items[i].price, ice: items[i].ice, sugar: items[i].sugar, milk: items[i].milk, number: items[i].number)
+//            dataForSend.append(new)
+//        }
+//        return dataForSend
+//    }
+//
+//    func orderSend(){
+//
+//        db.collection("Orders").addDocument(data: ["user":user.email,
+//                                                   "name":user.name,
+//                                                   "phone":user.phoneNumber,
+//                                                   "items":""
+//        ])
+//            .document(user.email).setData(["name":user.name,"phoneNumber":user.phoneNumber]){error in
+//            if let e = error{
+//                print(e.localizedDescription)
+//            }
+//
+//        }
+//    }
     
     var body: some View {
         
@@ -141,7 +170,7 @@ struct CartView: View {
             
             //送出按鈕
             Button(action: {
-
+//                orderSend()
             }) {
                 Text("送出")
                     .font(.system(size: screenWidth*0.06, weight:.bold))
@@ -182,7 +211,9 @@ struct CartView: View {
 
 struct CartView_Previews: PreviewProvider {
     static var previews: some View {
-        CartView().environmentObject(ItemsInCart())
+        CartView()
+            .environmentObject(ItemsInCart())
+            .environmentObject(UserStore())
     }
 }
 
@@ -201,3 +232,4 @@ struct DateChoose: View {
             .shadow(color: Color(#colorLiteral(red: 0.1215686275, green: 0.05882352941, blue: 0.003921568627, alpha: 0.59)), radius: 8, x: 4, y: 9)
     }
 }
+

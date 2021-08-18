@@ -25,7 +25,10 @@ struct CoffeeApp: App {
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
-    
+    //初始化NavigationBar的外觀
+    init(){
+        navBarInit()
+    }
     
     var body: some Scene {
         

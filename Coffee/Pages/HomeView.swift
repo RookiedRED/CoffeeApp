@@ -11,11 +11,16 @@ import SwiftUI
 struct HomeView: View {
     @EnvironmentObject var isShow : Show
     @EnvironmentObject var itemsInCart: ItemsInCart
+    @EnvironmentObject var user: UserStore
     @State var searchItem = ""
     @State var showCart = false
     var items = itemsData
     
     let screenHeight = UIScreen.main.bounds.height
+    
+    func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
     
     var body: some View {
         
@@ -36,9 +41,12 @@ struct HomeView: View {
         .navigationTitle("首頁")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(leading:HeaderButton(show: $isShow.menu, iconImage: "menu").padding(.bottom,10),
-                            trailing: HeaderButton(show: $isShow.cart, iconImage: "cart",itemsInCartNum: itemsInCart.items.count).padding(.bottom,10)
+                            trailing: HeaderButton(show: $isShow.cart, iconImage: "cart",itemsInCartNum: itemsInCart.items.count)
+                                .padding(.bottom,10)
                                 .sheet(isPresented:$isShow.cart){
-                                    CartView().environmentObject(self.itemsInCart)
+                                    CartView()
+                                        .environmentObject(itemsInCart)
+                                        .environmentObject(user)
                                 })
         
         
@@ -54,6 +62,7 @@ struct HomeView_Previews: PreviewProvider {
         HomeView()
             .environmentObject(Show())
             .environmentObject(ItemsInCart())
+            .environmentObject(UserStore())
     }
 }
 
@@ -70,9 +79,13 @@ struct ExDivider:View {
 }
 
 struct SearchBarToNewView: View {
+    @EnvironmentObject var user: UserStore
     @EnvironmentObject var itemsInCart: ItemsInCart
     @Binding var searchItem:String
     var items:[Item]
+    
+
+    
     var body: some View {
         HStack(alignment: .center){
             
@@ -86,8 +99,9 @@ struct SearchBarToNewView: View {
                 
                 NavigationLink(
                     destination: MenuView(title:searchItem,items:search(items:items,searchText: searchItem),itemsAll: search(items:items,searchText: searchItem))
-                        .environmentObject(Show())
-                        .environmentObject(self.itemsInCart),
+                        .environmentObject(user)
+                        .environmentObject(itemsInCart),
+                    
                     label: {
                         Image(systemName: "magnifyingglass")
                             .resizable()
@@ -97,7 +111,9 @@ struct SearchBarToNewView: View {
                     })
                 
                 
+                
             }
+            
             .font(.subheadline)
             .padding(.leading)
             .frame(height: 36)
@@ -120,12 +136,14 @@ struct SearchBarToNewView: View {
             .cornerRadius(5)
             
         }
+        
         .padding(.leading,25)
     }
 }
 
 
 struct MenuScroll: View {
+    @EnvironmentObject var user: UserStore
     @EnvironmentObject var itemsInCart: ItemsInCart
     let screenWidth = UIScreen.main.bounds.width
     var menus = menusData
@@ -144,8 +162,8 @@ struct MenuScroll: View {
                         NavigationLink(
                             
                             destination: MenuView(title:item.title,items: menuSearch(type: item.type),itemsAll: menuSearch(type: item.type))
-                                .environmentObject(Show())
-                                .environmentObject(self.itemsInCart),
+                                .environmentObject(user)
+                                .environmentObject(itemsInCart),
                             
                             label: {
                                 MenuCategory(item: item)
