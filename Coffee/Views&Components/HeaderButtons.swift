@@ -101,6 +101,8 @@ struct HeaderButton: View {
     @Binding var show : Bool
     var iconImage:String
     var type:String? = "left"
+    var itemsInCartNum:Int = 0
+    
     var body: some View {
         
         ZStack {
@@ -134,6 +136,17 @@ struct HeaderButton: View {
             //Button backshadow
             .shadow(color: Color(#colorLiteral(red: 0.7725490196, green: 0.7607843137, blue: 0.7607843137, alpha: 0.12)), radius: 4, x: 0.0, y: 0.0)
             .shadow(color: Color(#colorLiteral(red: 0.02745098039, green: 0.01568627451, blue: 0, alpha: 0.4250843199)), radius: 1, x: 2, y: 2)
+            
+            
+            //購物車商品總量
+            if iconImage == "cart" && itemsInCartNum > 0 {
+                Circle()
+                    .fill(Color(#colorLiteral(red: 0.9098039216, green: 0.2980392157, blue: 0.03921568627, alpha: 1)))
+                    .overlay(Text("\(itemsInCartNum)")
+                                .foregroundColor(.white))
+                    .frame(width: 25, height: 25)
+                    .offset(x: -25,y:10)
+            }
         }
     }
 }

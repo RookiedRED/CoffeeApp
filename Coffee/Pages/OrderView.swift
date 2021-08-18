@@ -10,6 +10,7 @@ import SwiftUI
 struct OrderView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var isShow : Show
+    @EnvironmentObject var itemsInCart: ItemsInCart
     let screenWidth = UIScreen.main.bounds.width
     let screenHeight = UIScreen.main.bounds.height
     @State var itemDetail : ItemDetail = ItemDetail(name: "拿鐵", price: 70, image: "ItemCoffee", ice: 0.7, sugar: 0.5, milk: 0.5, number: 1)
@@ -166,7 +167,10 @@ struct OrderView: View {
                         .shadow(color: Color(#colorLiteral(red: 0.8196078431, green: 0.4431372549, blue: 0, alpha: 0.25)), radius: 10, y: -8)
                     
                     VStack(spacing: 25.0){
-                        Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                        Button(action: {
+                            itemsInCart.items.append(itemDetail)
+                            self.presentationMode.wrappedValue.dismiss()
+                        }, label: {
                             Text("加入購物車")
                                 .font(.system(size: screenWidth*0.053, weight:.bold))
                                 .foregroundColor(.white)
@@ -206,7 +210,12 @@ struct OrderView: View {
         .edgesIgnoringSafeArea(.all)
         .navigationTitle(itemDetail.name)
         .navigationBarItems(leading:BackButton(backTitle:"菜單")
-                                .padding(.bottom,10),trailing:HeaderButton(show: $isShow.cart, iconImage: "cart").padding(.bottom,10))
+                                .padding(.bottom,10),
+                            trailing:HeaderButton(show: $isShow.cart, iconImage: "cart",itemsInCartNum: itemsInCart.items.count)
+                                .padding(.bottom,10)
+                                .sheet(isPresented:$isShow.cart){
+                                    CartView().environmentObject(self.itemsInCart)
+                                })
         .navigationBarBackButtonHidden(true)
         
     }
@@ -217,6 +226,7 @@ struct OrderView_Previews: PreviewProvider {
         VStack(spacing: 0.0) {
             OrderView()
                 .environmentObject(Show())
+                .environmentObject(ItemsInCart())
         }
     }
 }

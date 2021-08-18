@@ -9,7 +9,7 @@ import SwiftUI
 
 struct OrderHistoryView: View {
     @EnvironmentObject var isShow : Show
-    
+    @EnvironmentObject var itemsInCart: ItemsInCart
     var body: some View {
         
         VStack {
@@ -22,13 +22,18 @@ struct OrderHistoryView: View {
         }
         .navigationTitle("歷史訂單")
         .navigationBarTitleDisplayMode(.inline)
-        .navigationBarItems(leading:HeaderButton(show: $isShow.menu, iconImage: "menu").padding(.bottom,10),trailing: HeaderButton(show: $isShow.cart, iconImage: "cart").padding(.bottom,10))
+        .navigationBarItems(leading:HeaderButton(show: $isShow.menu, iconImage: "menu").padding(.bottom,10),trailing: HeaderButton(show: $isShow.cart, iconImage: "cart",itemsInCartNum: itemsInCart.items.count).padding(.bottom,10)
+                                .sheet(isPresented:$isShow.cart){
+                                    CartView().environmentObject(self.itemsInCart)
+                                })
         
     }
 }
 
 struct OrderHistoryView_Previews: PreviewProvider {
     static var previews: some View {
-        OrderHistoryView().environmentObject(Show())
+        OrderHistoryView()
+            .environmentObject(Show())
+            .environmentObject(ItemsInCart())
     }
 }

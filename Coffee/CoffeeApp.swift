@@ -8,6 +8,8 @@
 import SwiftUI
 import Firebase
 
+
+//Firebase初始化
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         
@@ -22,14 +24,18 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct CoffeeApp: App {
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    var user = UserStore()
+    
+    
     
     var body: some Scene {
         
         WindowGroup {
+            
             EntryView()
-                .environmentObject(Show())
-                .environmentObject(user)
+                .environmentObject(Show())//顯示環境
+                .environmentObject(UserStore())//用戶資料環境
+                .environmentObject(ItemsInCart())//購物車環境
+            
         }
     }
     

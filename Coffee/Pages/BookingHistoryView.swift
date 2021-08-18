@@ -9,6 +9,7 @@ import SwiftUI
 
 struct BookingHistoryView: View {
     @EnvironmentObject var isShow : Show
+    @EnvironmentObject var itemsInCart: ItemsInCart
     
     var body: some View {
         
@@ -22,13 +23,18 @@ struct BookingHistoryView: View {
         }
         .navigationTitle("歷史訂位")
         .navigationBarTitleDisplayMode(.inline)
-        .navigationBarItems(leading:HeaderButton(show: $isShow.menu, iconImage: "menu").padding(.bottom,10),trailing: HeaderButton(show: $isShow.cart, iconImage: "cart").padding(.bottom,10))
+        .navigationBarItems(leading:HeaderButton(show: $isShow.menu, iconImage: "menu").padding(.bottom,10),trailing: HeaderButton(show: $isShow.cart, iconImage: "cart",itemsInCartNum: itemsInCart.items.count).padding(.bottom,10)
+                                .sheet(isPresented:$isShow.cart){
+                                    CartView().environmentObject(self.itemsInCart)
+                                })
         
     }
 }
 
 struct BookingHistoryView_Previews: PreviewProvider {
     static var previews: some View {
-        BookingHistoryView().environmentObject(Show())
+        BookingHistoryView()
+            .environmentObject(Show())
+            .environmentObject(ItemsInCart())
     }
 }

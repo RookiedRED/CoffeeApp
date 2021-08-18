@@ -6,9 +6,13 @@
 //
 
 import SwiftUI
+
+
 struct HomeView: View {
     @EnvironmentObject var isShow : Show
+    @EnvironmentObject var itemsInCart: ItemsInCart
     @State var searchItem = ""
+    @State var showCart = false
     var items = itemsData
     
     let screenHeight = UIScreen.main.bounds.height
@@ -18,21 +22,26 @@ struct HomeView: View {
         
         VStack(spacing: 0) {
             
+            //廣告Banner
             Slideshow()
             
+            //搜尋條
             SearchBarToNewView(searchItem: $searchItem, items:items)
                 .padding(.horizontal,68)
                 .padding(.vertical,screenHeight/25)
             
+            //菜單捲軸
             MenuScroll()
         }
-        
-        
         .navigationTitle("首頁")
         .navigationBarTitleDisplayMode(.inline)
-        .navigationBarItems(leading:HeaderButton(show: $isShow.menu, iconImage: "menu").padding(.bottom,10),trailing: HeaderButton(show: $isShow.cart, iconImage: "cart").padding(.bottom,10))
+        .navigationBarItems(leading:HeaderButton(show: $isShow.menu, iconImage: "menu").padding(.bottom,10),
+                            trailing: HeaderButton(show: $isShow.cart, iconImage: "cart",itemsInCartNum: itemsInCart.items.count).padding(.bottom,10)
+                                .sheet(isPresented:$isShow.cart){
+                                    CartView().environmentObject(self.itemsInCart)
+                                })
         
-
+        
         
         
     }
@@ -42,7 +51,9 @@ struct HomeView_Previews: PreviewProvider {
     
     static var previews: some View {
         
-        HomeView().environmentObject(Show())
+        HomeView()
+            .environmentObject(Show())
+            .environmentObject(ItemsInCart())
     }
 }
 
@@ -55,11 +66,11 @@ struct ExDivider:View {
             .shadow(color:Color(#colorLiteral(red: 0.4352941176, green: 0.3764705882, blue: 0.3411764706, alpha: 1)), radius: 2 ,y:1)
             .shadow(color:Color(#colorLiteral(red: 0.1254901961, green: 0.1215686275, blue: 0.1176470588, alpha: 0.5)), radius: 2 ,y:-1)
         
-        
     }
 }
 
 struct SearchBarToNewView: View {
+    @EnvironmentObject var itemsInCart: ItemsInCart
     @Binding var searchItem:String
     var items:[Item]
     var body: some View {
@@ -74,7 +85,9 @@ struct SearchBarToNewView: View {
                 
                 
                 NavigationLink(
-                    destination: MenuView(title:searchItem,items:search(items:items,searchText: searchItem),itemsAll: search(items:items,searchText: searchItem)).environmentObject(Show()),
+                    destination: MenuView(title:searchItem,items:search(items:items,searchText: searchItem),itemsAll: search(items:items,searchText: searchItem))
+                        .environmentObject(Show())
+                        .environmentObject(self.itemsInCart),
                     label: {
                         Image(systemName: "magnifyingglass")
                             .resizable()
@@ -113,7 +126,7 @@ struct SearchBarToNewView: View {
 
 
 struct MenuScroll: View {
-    
+    @EnvironmentObject var itemsInCart: ItemsInCart
     let screenWidth = UIScreen.main.bounds.width
     var menus = menusData
     
@@ -130,7 +143,9 @@ struct MenuScroll: View {
                     ForEach(menus) { item in
                         NavigationLink(
                             
-                            destination: MenuView(title:item.title,items: menuSearch(type: item.type),itemsAll: menuSearch(type: item.type)).environmentObject(Show()),
+                            destination: MenuView(title:item.title,items: menuSearch(type: item.type),itemsAll: menuSearch(type: item.type))
+                                .environmentObject(Show())
+                                .environmentObject(self.itemsInCart),
                             
                             label: {
                                 MenuCategory(item: item)
@@ -147,6 +162,7 @@ struct MenuScroll: View {
 
 
 struct MenuCategory: View {
+    
     let screenWidth = UIScreen.main.bounds.width
     var item = Menu(title: "Fast", image: "MenuImage.hot",type:"Hot")
     

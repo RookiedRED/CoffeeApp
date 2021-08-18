@@ -19,4 +19,7 @@ struct ItemDetail: Identifiable {
     var number : Int
 }
 
-var ItemsInCart=[ItemDetail]()
+class ItemsInCart:ObservableObject{
+    @Published var items = [ItemDetail]()
+}
+

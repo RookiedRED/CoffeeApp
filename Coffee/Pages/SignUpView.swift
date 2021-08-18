@@ -28,7 +28,7 @@ struct SignUpView: View {
         if (userDetail.name == "" || userDetail.phoneNumber == "") {
             self.alertMessage = "請輸入完整資訊"
             self.isShow.alert = true
-        
+            
         }else if  userDetail.password != passwordConfirm {
             self.alertMessage = "兩次密碼輸入需一致"
             self.isShow.alert = true
@@ -186,81 +186,15 @@ struct SignUpView_Previews: PreviewProvider {
     }
 }
 
-struct RegisterInputField: View {
-    
-    let screenWidth = UIScreen.main.bounds.width
-    var fieldTitle = ""
-    var placeHolder = ""
-    @Binding var fieldValue: String
-    
-    var body: some View {
-        HStack(spacing:12){
-            Text(fieldTitle)
-                .font(.system(size: screenWidth * 0.06, weight: .bold))
-                .foregroundColor(.white)
-            TextField(placeHolder, text: $fieldValue )
-                .foregroundColor(.white)
-                .font(.system(size: screenWidth * 0.05, weight: .regular))
-                .padding(8)
-                .background(
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 5)
-                            .foregroundColor(.white.opacity(0.05))
-                        RoundedRectangle(cornerRadius: 5)
-                            .stroke(Color.white)
-                    })
-            
-            
-        }
-        .padding(.horizontal,screenWidth * 0.1)
-    }
-}
-
-//會員資料
-struct UserInformationInput: View {
-    //    @Binding var userDetail:User
-    
-    @State private var username = ""
-    @State private var password = ""
-    @State private var phoneNumber = ""
-    @State private var name = ""
-    let ImageView = UIScreen.main.bounds.width
-    
-    var body: some View {
-        VStack {
-            
-            Text("會員資料")
-                .font(.system(size: ImageView * 0.064, weight: .bold, design: .rounded))
-                .foregroundColor(.white)
-                .padding()
-            RegisterInputField(fieldTitle: "名稱", placeHolder: "", fieldValue: $name)
-                .padding()
-            RegisterInputField(fieldTitle: "電話", placeHolder: "", fieldValue: $phoneNumber)
-                .padding()
-            RegisterInputField(fieldTitle: "帳號", placeHolder: "", fieldValue: $username)
-                .padding()
-            RegisterInputField(fieldTitle: "密碼", placeHolder: "", fieldValue: $password)
-                .padding()
-            Spacer()
-            Rectangle()
-                .fill(Color(#colorLiteral(red: 0.2235294118, green: 0.1803921569, blue: 0.1529411765, alpha: 1)))
-                .frame(width: 350, height: 1)
-                .shadow(color:Color(#colorLiteral(red: 0.4352941176, green: 0.3764705882, blue: 0.3411764706, alpha: 1)), radius: 2 ,y:1)
-                .shadow(color:Color(#colorLiteral(red: 0.1254901961, green: 0.1215686275, blue: 0.1176470588, alpha: 0.5)), radius: 2 ,y:-1)
-            Spacer()
-            
-        }
-    }
-}
-
-
 
 struct ExDivider2: View {
+    var lineWidth:CGFloat = 350
+    var lineHeight:CGFloat = 1
     var body: some View{
         
         Rectangle()
             .fill(Color(#colorLiteral(red: 0.2235294118, green: 0.1803921569, blue: 0.1529411765, alpha: 1)))
-            .frame(width: 350, height: 1)
+            .frame(width: lineWidth, height: lineHeight)
             .shadow(color:Color(#colorLiteral(red: 0.4352941176, green: 0.3764705882, blue: 0.3411764706, alpha: 1)), radius: 2 ,y:1)
             .shadow(color:Color(#colorLiteral(red: 0.1254901961, green: 0.1215686275, blue: 0.1176470588, alpha: 0.5)), radius: 2 ,y:-1)
         

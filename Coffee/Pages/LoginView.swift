@@ -17,8 +17,7 @@ struct LoginView: View {
     @State var keepLoggingCheck:Bool = false
     @State var isFocused:Bool = false
     @State var alertMessage:String = "Something went wrong."
-    @State var connectView:String = ""
-    @State var isSuccessful:Bool = false
+    
     let db = Firestore.firestore()
     
     let screenWidth = UIScreen.main.bounds.width
@@ -30,7 +29,6 @@ struct LoginView: View {
         self.isFocused = false
         
         Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
-            
             
             if let e = error {
                 self.alertMessage = e.localizedDescription
@@ -46,8 +44,8 @@ struct LoginView: View {
                     self.user.email = self.email
                 }
                 self.isShow.pages = "首頁"
-                
             }
+            
         }
     }
     
@@ -146,16 +144,11 @@ struct LoginView: View {
                 
                 Spacer()
                 
-
-                
-                
             }
             .navigationTitle("登入")
             .navigationBarTitleDisplayMode(.inline)
-            .navigationBarItems(leading:HeaderButton(show: $isShow.menu, iconImage: "menu").padding(.bottom,10),trailing: HeaderButton(show: $isShow.cart, iconImage: "cart").padding(.bottom,10))
-            
-            //彈出通知並準備跳轉頁面
-            AlertView(connectView: connectView, isSuccessful: isSuccessful, Alertname: alertMessage)
+            .navigationBarItems(leading:HeaderButton(show: $isShow.menu, iconImage: "menu").padding(.bottom,10),trailing: EmptyView())
+        
         }
     }
 }

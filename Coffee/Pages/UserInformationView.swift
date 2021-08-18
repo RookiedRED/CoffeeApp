@@ -102,7 +102,7 @@ struct UserInformationView: View {
         }
         .frame(maxWidth:.infinity,maxHeight: .infinity)
         .padding(.vertical,60)
-        .navigationBarItems(leading:HeaderButton(show: $isShow.menu, iconImage: "menu").padding(.bottom,10),trailing: HeaderButton(show: $isShow.cart, iconImage: "cart").padding(.bottom,10))
+        .navigationBarItems(leading:HeaderButton(show: $isShow.menu, iconImage: "menu").padding(.bottom,10))
         .navigationBarBackButtonHidden(true)
         .onAppear(perform: {
             loadUserInformation()
