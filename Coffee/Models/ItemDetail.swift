@@ -18,32 +18,35 @@ struct ItemDetail: Identifiable{
     var milk : CGFloat
     var number : Int
 }
-//public struct City: Codable {
-//
-//    let name: String
-//    let state: String?
-//    let country: String?
-//    let isCapital: Bool?
-//    let population: Int64?
-//
-//    enum CodingKeys: String, CodingKey {
-//        case name
-//        case state
-//        case country
-//        case isCapital = "capital"
-//        case population
-//    }
-//
-//}
-//
-//public struct ItemDataSend{
-//    let name : String
-//    let price : Int?
-//    let ice : CGFloat?
-//    let sugar : CGFloat?
-//    let milk : CGFloat?
-//    let number : Int?
-//}
+
+struct orderDataModel:Codable{
+    let name : String
+    let price : Int?
+    let ice : CGFloat?
+    let sugar : CGFloat?
+    let milk : CGFloat?
+    let number : Int?
+    
+    enum CodingKeys: String, CodingKey {
+        case name
+        case price
+        case ice
+        case sugar
+        case milk
+        case number 
+    }
+}
+
+struct orderDatas:Codable {
+    var takeDate:String
+    var orders:[orderDataModel]
+    
+    enum CodingKeys: String, CodingKey {
+        case takeDate
+        case orders
+    }
+}
+
 
 class ItemsInCart:ObservableObject{
     @Published var items = [ItemDetail]()

@@ -7,14 +7,29 @@
 
 import SwiftUI
 import Firebase
+import FirebaseFirestoreSwift
 
 struct CartView: View {
     @EnvironmentObject var itemsInCart: ItemsInCart
     @EnvironmentObject var user: UserStore
     let screenWidth = UIScreen.main.bounds.width
     let screenHeight = UIScreen.main.bounds.height
+    
     @State var takeDate = Date()
     @State var totalPrice:Int = 0
+    
+    //獲得台灣地區當前時間
+    func getNowDate() -> String {
+        let nowDate: Date = Date()
+        let dateFormatter: DateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yy-MM-dd HH:mm:ss"
+        dateFormatter.locale = Locale(identifier: "zh_Hant_TW") // 設定地區(台灣)
+        dateFormatter.timeZone = TimeZone(identifier: "Asia/Taipei") // 設定時區(台灣)
+        let dateFormatString:String = dateFormatter.string(from: nowDate)
+        return dateFormatString
+    }
+   
+    
     
     let db = Firestore.firestore()
     //初始化List背景顏色
@@ -40,36 +55,40 @@ struct CartView: View {
             }else{
                 self.totalPrice -= self.itemsInCart.items[index].price
                 self.itemsInCart.items[index].number -= 1
-                
             }
         }
     }
 
-//    
-//    func transDataForSend(items:[ItemDetail])->[ItemDataSend]{
-//        var dataForSend = [ItemDataSend]()
-//        
-//        for i in 0..<items.count {
-//            let new = ItemDataSend(name: items[i].name, price: items[i].price, ice: items[i].ice, sugar: items[i].sugar, milk: items[i].milk, number: items[i].number)
-//            dataForSend.append(new)
-//        }
-//        return dataForSend
-//    }
-//
-//    func orderSend(){
-//
-//        db.collection("Orders").addDocument(data: ["user":user.email,
-//                                                   "name":user.name,
-//                                                   "phone":user.phoneNumber,
-//                                                   "items":""
-//        ])
-//            .document(user.email).setData(["name":user.name,"phoneNumber":user.phoneNumber]){error in
-//            if let e = error{
-//                print(e.localizedDescription)
-//            }
-//
-//        }
-//    }
+    //疆域傳送資料轉成Decodable
+    func transDataForSend(items:[ItemDetail])->[orderDataModel]{
+        var dataForSend = [orderDataModel]()
+        
+        for i in 0..<items.count {
+            let new = orderDataModel(name: items[i].name, price: items[i].price, ice: items[i].ice, sugar: items[i].sugar, milk: items[i].milk, number: items[i].number)
+            dataForSend.append(new)
+        }
+        return dataForSend
+    }
+
+    func orderSend(){
+        let nowDate:String = getNowDate()
+        
+        let dateFormatter: DateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yy-MM-dd HH:mm:ss"
+        dateFormatter.locale = Locale(identifier: "zh_Hant_TW") // 設定地區(台灣)
+        dateFormatter.timeZone = TimeZone(identifier: "Asia/Taipei") // 設定時區(台灣)
+        let dateFormatString:String = dateFormatter.string(from: takeDate)
+        
+        let data = orderDatas(takeDate:dateFormatString,orders: transDataForSend(items: itemsInCart.items))
+        do {
+            try db.collection("Orders").document("\(nowDate)-\(user.email)").setData(from: data)
+        }catch let error{
+            print("Error writing city to Firestore: \(error)")
+        }
+        
+        
+    }
+
     
     var body: some View {
         
@@ -170,7 +189,7 @@ struct CartView: View {
             
             //送出按鈕
             Button(action: {
-//                orderSend()
+                orderSend()
             }) {
                 Text("送出")
                     .font(.system(size: screenWidth*0.06, weight:.bold))
