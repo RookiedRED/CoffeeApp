@@ -10,6 +10,7 @@ import Firebase
 import FirebaseFirestoreSwift
 
 struct CartView: View {
+    @EnvironmentObject var isShow : Show
     @EnvironmentObject var itemsInCart: ItemsInCart
     @EnvironmentObject var user: UserStore
     let screenWidth = UIScreen.main.bounds.width
@@ -17,6 +18,9 @@ struct CartView: View {
     
     @State var takeDate = Date()
     @State var totalPrice:Int = 0
+    @State var showAlert = false
+    @State var alertTitle = ""
+    @State var alertMessage = ""
     
     //獲得台灣地區當前時間
     func getNowDate() -> String {
@@ -80,8 +84,10 @@ struct CartView: View {
         let dateFormatString:String = dateFormatter.string(from: takeDate)
         
         let data = orderDatas(takeDate:dateFormatString,orders: transDataForSend(items: itemsInCart.items))
+        
         do {
             try db.collection("Orders").document("\(nowDate)-\(user.email)").setData(from: data)
+            self.itemsInCart.items.removeAll()
         }catch let error{
             print("Error writing city to Firestore: \(error)")
         }
@@ -93,6 +99,19 @@ struct CartView: View {
     var body: some View {
         
         VStack {
+            
+            VStack(spacing: 5.0) {
+                RoundedRectangle(cornerRadius: 3)
+                    .frame(width: 100, height: 2)
+                    .foregroundColor(.white.opacity(0.6))
+                
+                RoundedRectangle(cornerRadius: 3)
+                    .frame(width: 100, height: 2)
+                    .foregroundColor(.white.opacity(0.6))
+            }
+            .padding(.top,10)
+            
+            
             //購物車中的商品
             List{
                 ForEach(itemsInCart.items){ i in
@@ -159,14 +178,23 @@ struct CartView: View {
                     .listRowBackground(
                         ZStack {
                             LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 0.3678437173, green: 0.2994093597, blue: 0.2702392936, alpha: 1)), Color(#colorLiteral(red: 0.2371205091, green: 0.2174595296, blue: 0.1987408698, alpha: 1))]), startPoint: .topLeading, endPoint: .bottomTrailing)
-                            Rectangle().stroke()
+                            Rectangle().stroke().foregroundColor(Color.black)
                         })
                 }
                 .onDelete{ index in
                     self.itemsInCart.items.remove(atOffsets: index)
+    
+                    var newPrice = 0
+                    for i in itemsInCart.items {
+                        newPrice += i.number*i.price
+                    }
+                    
+                    self.totalPrice = newPrice
+                    
                 }
             }
             .frame(height:screenHeight*0.6)
+
             
             //取餐日期選擇
             DateChoose(takeDate:$takeDate)
@@ -183,13 +211,26 @@ struct CartView: View {
                     .font(.system(size:screenWidth*0.06, weight: .bold))
                     .foregroundColor(.white)
             }
-            .padding()
-            .padding(.horizontal,10)
+            .padding(.horizontal,16)
             
             
             //送出按鈕
             Button(action: {
-                orderSend()
+                if user.email == "" {
+                    alertTitle = "注意"
+                    alertMessage = "請先登入會員帳號"
+                    showAlert = true
+                    
+                }else if itemsInCart.items.count <= 0{
+                    alertTitle = "訂單無效"
+                    alertMessage = "購物車無任何商品"
+                    self.showAlert = true
+                    
+                }else {
+                    orderSend()
+                    self.isShow.cart.toggle()
+                }
+                
             }) {
                 Text("送出")
                     .font(.system(size: screenWidth*0.06, weight:.bold))
@@ -218,13 +259,16 @@ struct CartView: View {
             
         }
         .frame(maxWidth:.infinity,maxHeight: .infinity)
-        .background(LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 0.3678437173, green: 0.2994093597, blue: 0.2702392936, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1))]), startPoint: .top, endPoint: .bottom))
-        .edgesIgnoringSafeArea(.bottom)
+        .background(LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 0.1990094781, green: 0.1825064421, blue: 0.1667987704, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1))]), startPoint: .top, endPoint: .bottom))
+        .edgesIgnoringSafeArea(.all)
         .onAppear{
             for i in itemsInCart.items {
-                self.totalPrice += i.price
+                self.totalPrice += i.number*i.price
             }
         }
+        .alert(isPresented: $showAlert) { () -> Alert in
+                return Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .destructive(Text("OK")))
+             }
     }
 }
 
@@ -237,10 +281,11 @@ struct CartView_Previews: PreviewProvider {
 }
 
 struct DateChoose: View {
+    let screenWidth = UIScreen.main.bounds.width
     @Binding var takeDate:Date
     
     var body: some View {
-        DatePicker("選擇取餐時間", selection: $takeDate)
+        DatePicker("取餐時間", selection: $takeDate)
             .accentColor(Color(#colorLiteral(red: 0.9026349783, green: 0.3080496192, blue: 0.06296164542, alpha: 1)))
             .foregroundColor(.white)
             .padding(16)

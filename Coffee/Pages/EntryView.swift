@@ -64,6 +64,7 @@ struct EntryView: View {
             .edgesIgnoringSafeArea(.bottom)
             
             
+            
         }
     }
 }
