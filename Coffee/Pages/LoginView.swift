@@ -33,12 +33,11 @@ struct LoginView: View {
             if let e = error {
                 self.alertMessage = e.localizedDescription
                 self.isShow.alert = true
-            }else{
                 
+            }else{
                 self.user.keepLogging = true
                 self.user.email = self.email
                 loadUserInformation()
-                
                 
                 self.isShow.pages = "首頁"
             }

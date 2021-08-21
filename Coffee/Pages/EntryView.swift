@@ -17,12 +17,13 @@ struct EntryView: View {
     //判斷會員是否登入來回傳登入或會員畫面
     func UserView(isLogged:Bool) -> AnyView {
         if isLogged{
-            return AnyView(UserInformationView().environmentObject(user))
+            return AnyView(UserInformationView())
         }else{
-            return AnyView(LoginView().environmentObject(user))
+            return AnyView(LoginView())
         }
     }
     
+    //收起鍵盤
     func hideKeyboard() {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
@@ -38,14 +39,14 @@ struct EntryView: View {
                     case "會員" : UserView(isLogged:(user.keepLogging))
                     case "首頁" : HomeView().environmentObject(itemsInCart)
                     case "通知" : NotificationView().environmentObject(itemsInCart)
-                    case "訂位" : HomeView()//------------yet
+                    case "訂位" : ReservationView()
                     case "歷史訂位" : BookingHistoryView().environmentObject(itemsInCart)
                     case "歷史訂單" : OrderHistoryView().environmentObject(itemsInCart)
                     case "活動" : EventView().environmentObject(itemsInCart)
                     case "咖啡知識" : KnowledgeView().environmentObject(itemsInCart)
                     case "登出" : LoginView()
                     default:
-                        HomeView()
+                        HomeView().environmentObject(itemsInCart)
                     }
                     
                 }
@@ -57,14 +58,14 @@ struct EntryView: View {
                 }
                 .blur(radius: isShow.menu ? 10:0)
                 .animation(.easeInOut)
+                
                 //側邊菜單欄
                 SideMenuView(show:$isShow.menu)
                 
             }
             .edgesIgnoringSafeArea(.bottom)
             
-            
-            
+               
         }
     }
 }

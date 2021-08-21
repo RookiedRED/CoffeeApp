@@ -8,6 +8,7 @@
 import SwiftUI
 import Firebase
 import FirebaseFirestoreSwift
+import Network
 
 struct CartView: View {
     @EnvironmentObject var isShow : Show
@@ -22,18 +23,7 @@ struct CartView: View {
     @State var alertTitle = ""
     @State var alertMessage = ""
     
-    //獲得台灣地區當前時間
-    func getNowDate() -> String {
-        let nowDate: Date = Date()
-        let dateFormatter: DateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yy-MM-dd HH:mm:ss"
-        dateFormatter.locale = Locale(identifier: "zh_Hant_TW") // 設定地區(台灣)
-        dateFormatter.timeZone = TimeZone(identifier: "Asia/Taipei") // 設定時區(台灣)
-        let dateFormatString:String = dateFormatter.string(from: nowDate)
-        return dateFormatString
-    }
-   
-    
+
     
     let db = Firestore.firestore()
     //初始化List背景顏色
@@ -62,7 +52,7 @@ struct CartView: View {
             }
         }
     }
-
+    
     //疆域傳送資料轉成Decodable
     func transDataForSend(items:[ItemDetail])->[orderDataModel]{
         var dataForSend = [orderDataModel]()
@@ -73,28 +63,60 @@ struct CartView: View {
         }
         return dataForSend
     }
-
+    
+    //送出訂單資訊
     func orderSend(){
+        var errorInWritting = false
         let nowDate:String = getNowDate()
+        let monitor = NWPathMonitor()
         
-        let dateFormatter: DateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yy-MM-dd HH:mm:ss"
-        dateFormatter.locale = Locale(identifier: "zh_Hant_TW") // 設定地區(台灣)
-        dateFormatter.timeZone = TimeZone(identifier: "Asia/Taipei") // 設定時區(台灣)
-        let dateFormatString:String = dateFormatter.string(from: takeDate)
         
-        let data = orderDatas(takeDate:dateFormatString,orders: transDataForSend(items: itemsInCart.items))
-        
-        do {
-            try db.collection("Orders").document("\(nowDate)-\(user.email)").setData(from: data)
-            self.itemsInCart.items.removeAll()
-        }catch let error{
-            print("Error writing city to Firestore: \(error)")
+        //網路檢查開始
+        monitor.start(queue: DispatchQueue.global())
+        monitor.pathUpdateHandler = { path in
+            
+            if path.status == .satisfied { //網路確認連線
+                let dateFormatter: DateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yy-MM-dd HH:mm:ss"
+                dateFormatter.locale = Locale(identifier: "zh_Hant_TW") // 設定地區(台灣)
+                dateFormatter.timeZone = TimeZone(identifier: "Asia/Taipei") // 設定時區(台灣)
+                let dateFormatString:String = dateFormatter.string(from: takeDate)
+                
+                let data = orderDatas(takeDate:dateFormatString,orders: transDataForSend(items: itemsInCart.items))
+                
+                do {
+                    try db.collection("Orders").document("\(nowDate)-\(user.email)").setData(from: data)
+                    
+                }catch let error{
+                    errorInWritting = true
+                    print("Error writing data to Firestore: \(error)")
+                }
+                
+                if errorInWritting {
+                    self.alertTitle = "訂單無效"
+                    self.alertMessage = "送出訂單時發生未預期錯誤"
+                    self.showAlert = true
+                    
+                }else{
+                    DispatchQueue.main.async {
+                        self.itemsInCart.items.removeAll()
+                    }
+                    self.alertTitle = "訂單成立"
+                    self.alertMessage = "歡迎再度光臨"
+                    self.showAlert = true
+                }
+
+            } else { //無網路連線
+                self.alertTitle = "訂單無效"
+                self.alertMessage = "請檢察網路狀況"
+                self.showAlert = true
+            }
         }
-        
+        //網路檢查結束
+        monitor.cancel()
         
     }
-
+    
     
     var body: some View {
         
@@ -148,7 +170,7 @@ struct CartView: View {
                                 }
                             
                             
-    
+                            
                             Text("\(i.number)")
                                 .font(.system(size:screenWidth*0.08, weight: .bold))
                                 .frame(width: screenWidth/10)
@@ -183,7 +205,7 @@ struct CartView: View {
                 }
                 .onDelete{ index in
                     self.itemsInCart.items.remove(atOffsets: index)
-    
+                    
                     var newPrice = 0
                     for i in itemsInCart.items {
                         newPrice += i.number*i.price
@@ -194,7 +216,7 @@ struct CartView: View {
                 }
             }
             .frame(height:screenHeight*0.6)
-
+            
             
             //取餐日期選擇
             DateChoose(takeDate:$takeDate)
@@ -228,7 +250,7 @@ struct CartView: View {
                     
                 }else {
                     orderSend()
-                    self.isShow.cart.toggle()
+                    
                 }
                 
             }) {
@@ -267,8 +289,8 @@ struct CartView: View {
             }
         }
         .alert(isPresented: $showAlert) { () -> Alert in
-                return Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .destructive(Text("OK")))
-             }
+            return Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .destructive(Text("OK"),action:{self.isShow.cart.toggle()}))
+        }
     }
 }
 
@@ -280,12 +302,14 @@ struct CartView_Previews: PreviewProvider {
     }
 }
 
+
+//取餐時間選取欄
 struct DateChoose: View {
     let screenWidth = UIScreen.main.bounds.width
     @Binding var takeDate:Date
     
     var body: some View {
-        DatePicker("取餐時間", selection: $takeDate)
+        DatePicker("取餐時間", selection: $takeDate,in:Date()...)
             .accentColor(Color(#colorLiteral(red: 0.9026349783, green: 0.3080496192, blue: 0.06296164542, alpha: 1)))
             .foregroundColor(.white)
             .padding(16)

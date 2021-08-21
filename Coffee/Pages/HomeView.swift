@@ -18,12 +18,12 @@ struct HomeView: View {
     
     let screenHeight = UIScreen.main.bounds.height
     
+    //收起鍵盤
     func hideKeyboard() {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
     
     var body: some View {
-        
         
         VStack(spacing: 0) {
             
@@ -78,13 +78,12 @@ struct ExDivider:View {
     }
 }
 
+//搜尋條（並到新分頁）
 struct SearchBarToNewView: View {
     @EnvironmentObject var user: UserStore
     @EnvironmentObject var itemsInCart: ItemsInCart
     @Binding var searchItem:String
     var items:[Item]
-    
-
     
     var body: some View {
         HStack(alignment: .center){
@@ -142,6 +141,7 @@ struct SearchBarToNewView: View {
 }
 
 
+//菜單卷軸
 struct MenuScroll: View {
     @EnvironmentObject var user: UserStore
     @EnvironmentObject var itemsInCart: ItemsInCart
@@ -178,7 +178,7 @@ struct MenuScroll: View {
     }
 }
 
-
+//分類菜單樣式
 struct MenuCategory: View {
     
     let screenWidth = UIScreen.main.bounds.width
@@ -187,7 +187,6 @@ struct MenuCategory: View {
     
     var body: some View {
         VStack{
-            
             Image(item.image)
                 .resizable()
                 .scaledToFill()
