@@ -17,6 +17,8 @@ struct LoginView: View {
     @State var keepLoggingCheck:Bool = false
     @State var isFocused:Bool = false
     @State var alertMessage:String = "Something went wrong."
+    @State var showAlert:Bool = false
+    
     
     let db = Firestore.firestore()
     
@@ -32,7 +34,7 @@ struct LoginView: View {
             
             if let e = error {
                 self.alertMessage = e.localizedDescription
-                self.isShow.alert = true
+                self.showAlert = true
                 
             }else{
                 self.user.keepLogging = true
@@ -69,7 +71,6 @@ struct LoginView: View {
     }
     
     var body: some View {
-        ZStack {
             VStack(spacing: 12.0) {
                 
                 Image("logo")
@@ -159,11 +160,16 @@ struct LoginView: View {
                 Spacer()
                 
             }
+            .background(LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 0.3678437173, green: 0.2994093597, blue: 0.2702392936, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1))]), startPoint: .top, endPoint: .bottom))
+            .onTapGesture{
+                hideKeyboard()
+            }
             .navigationTitle("登入")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(leading:HeaderButton(show: $isShow.menu, iconImage: "menu").padding(.bottom,10),trailing: EmptyView())
-        
-        }
+            .alert(isPresented: $showAlert) { () -> Alert in
+                return Alert(title: Text(""), message: Text(alertMessage), dismissButton: .destructive(Text("OK"),action:{self.isShow.cart.toggle()}))
+            }
     }
 }
 
