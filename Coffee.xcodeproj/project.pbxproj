@@ -40,6 +40,7 @@
 		12B6D8EA26CF83DD00A79237 /* ReservationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B6D8E926CF83DD00A79237 /* ReservationView.swift */; };
 		12B6D8EC26D0A16400A79237 /* ReservationDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B6D8EB26D0A16400A79237 /* ReservationDataModel.swift */; };
 		12B6D8EE26D0A25E00A79237 /* DateFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B6D8ED26D0A25E00A79237 /* DateFunction.swift */; };
+		12B6D8F126D26D0300A79237 /* Herculanum.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 12B6D8F026D26D0300A79237 /* Herculanum.ttf */; };
 		12D5FB7426A8FDCF00B275B1 /* CoffeeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12D5FB7326A8FDCF00B275B1 /* CoffeeApp.swift */; };
 		12D5FB7826A8FDD100B275B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 12D5FB7726A8FDD100B275B1 /* Assets.xcassets */; };
 		12D5FB7B26A8FDD100B275B1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 12D5FB7A26A8FDD100B275B1 /* Preview Assets.xcassets */; };
@@ -80,6 +81,7 @@
 		12B6D8E926CF83DD00A79237 /* ReservationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationView.swift; sourceTree = "<group>"; };
 		12B6D8EB26D0A16400A79237 /* ReservationDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReservationDataModel.swift; sourceTree = "<group>"; };
 		12B6D8ED26D0A25E00A79237 /* DateFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFunction.swift; sourceTree = "<group>"; };
+		12B6D8F026D26D0300A79237 /* Herculanum.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Herculanum.ttf; sourceTree = "<group>"; };
 		12D5FB7026A8FDCF00B275B1 /* Coffee.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Coffee.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		12D5FB7326A8FDCF00B275B1 /* CoffeeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoffeeApp.swift; sourceTree = "<group>"; };
 		12D5FB7726A8FDD100B275B1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -159,10 +161,19 @@
 		129B977C26B3A48100F3DB20 /* Effects */ = {
 			isa = PBXGroup;
 			children = (
+				12B6D8EF26D26C1A00A79237 /* FontStyle */,
 				129B976926B122B100F3DB20 /* NavBarAppearance.swift */,
 				129B975B26AC4E0200F3DB20 /* BlurView.swift */,
 			);
 			path = Effects;
+			sourceTree = "<group>";
+		};
+		12B6D8EF26D26C1A00A79237 /* FontStyle */ = {
+			isa = PBXGroup;
+			children = (
+				12B6D8F026D26D0300A79237 /* Herculanum.ttf */,
+			);
+			path = FontStyle;
 			sourceTree = "<group>";
 		};
 		12D5FB6726A8FDCF00B275B1 = {
@@ -285,6 +296,7 @@
 			files = (
 				12D5FB7B26A8FDD100B275B1 /* Preview Assets.xcassets in Resources */,
 				12D5FB7826A8FDD100B275B1 /* Assets.xcassets in Resources */,
+				12B6D8F126D26D0300A79237 /* Herculanum.ttf in Resources */,
 				12174F7A26C2238F00A00DED /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

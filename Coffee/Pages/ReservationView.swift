@@ -133,7 +133,15 @@ struct ReservationView: View {
             .padding(.horizontal)
             
             Button(action: {
-                reservationSend()
+                if user.email == "" {
+                    alertTitle = "注意"
+                    alertMessage = "請先登入會員帳號"
+                    showAlert = true
+                    
+                }else {
+                    reservationSend()
+                }
+               
             }, label: {
                 Text("預約")
                     .font(.system(size: screenWidth*0.053, weight:.bold))

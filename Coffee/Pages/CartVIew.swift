@@ -246,7 +246,7 @@ struct CartView: View {
                 }else if itemsInCart.items.count <= 0{
                     alertTitle = "訂單無效"
                     alertMessage = "購物車無任何商品"
-                    self.showAlert = true
+                    showAlert = true
                     
                 }else {
                     orderSend()

@@ -73,11 +73,20 @@ struct LoginView: View {
     var body: some View {
             VStack(spacing: 12.0) {
                 
-                Image("logo")
-                    .resizable()
-                    .frame(width: screenWidth * 0.53, height: screenWidth * 0.66, alignment: .top)
-                    .foregroundColor(.white)
-                    .padding(.top,screenWidth * 0.1)
+                VStack {
+                    Image("logo")
+                        .resizable()
+                        .frame(width: screenWidth * 0.3, height: screenWidth * 0.3, alignment: .top)
+                        .foregroundColor(.white)
+                        .padding()
+                        
+                    Text("Beans")
+                        .font(Font.custom("Herculanum", size: screenWidth * 0.1))
+                        .italic()
+                        .foregroundColor(.white)
+                    
+                }
+                .padding(.vertical,screenWidth * 0.1)
                 
                 //帳號輸入
                 HStack(spacing:10) {
