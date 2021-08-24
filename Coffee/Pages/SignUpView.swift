@@ -178,7 +178,7 @@ struct SignUpView: View {
             hideKeyboard()
         }
         .navigationTitle("註冊")
-        .navigationBarItems(leading:BackButton(backTitle:"登入")
+        .navigationBarItems(leading:BackButton(presentationMode: _presentationMode, backTitle: "登入")
                                 .padding(.bottom,10))
         .navigationBarBackButtonHidden(true)
         .edgesIgnoringSafeArea(.bottom)

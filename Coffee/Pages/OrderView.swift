@@ -18,36 +18,37 @@ struct OrderView: View {
     @State var changeType : String = "甜度"
     @State var itemSize : String = "M"
     @State var itemNumber: String = "1"
+    
     var body: some View {
         
-        VStack() {
+        VStack{
             
             Image(itemDetail.image)
                 .resizable()
-                .frame(width: screenWidth*0.65, height: screenWidth*0.55)
+                .frame(width: screenWidth*0.6, height: screenHeight*0.25)
                 .cornerRadius(15)
                 .shadow(color: Color(#colorLiteral(red: 1, green: 0.558999002, blue: 0, alpha: 0.5)), radius: 10, y: 2)
                 .padding(.top)
             
-            ZStack{
-                Text("\(Int(itemDetail.ice*100))%")
-                    .opacity(changeType == "冰塊" ? 1:0.3)
-                    .offset(y:changeType == "冰塊" ? 0 :90.0)
-                Text("\(Int(itemDetail.sugar*100))%")
-                    .opacity(changeType == "甜度" ? 1:0.3)
-                    .offset(y:changeType == "甜度" ? 0 :90.0)
-                Text("\(Int(itemDetail.milk*100))%")
-                    .opacity(changeType == "牛奶" ? 1:0.3)
-                    .offset(y:changeType == "牛奶" ? 0 :90.0)
+            
+            
+            
+            ZStack(alignment:.top){
                 
-            }
-            .foregroundColor(Color(#colorLiteral(red: 0.9137254902, green: 0.4, blue: 0.03137254902, alpha: 1)))
-            .font(.system(size: 30, weight: .bold))
-            .padding(.top,screenHeight/30)
-            .padding(.bottom,screenHeight/10)
-            
-            
-            ZStack {
+                ZStack{
+                    Text("\(Int(itemDetail.ice*100))%")
+                        .opacity(changeType == "冰塊" ? 1:0.3)
+                        .offset(y:changeType == "冰塊" ? 0 :90.0)
+                    Text("\(Int(itemDetail.sugar*100))%")
+                        .opacity(changeType == "甜度" ? 1:0.3)
+                        .offset(y:changeType == "甜度" ? 0 :90.0)
+                    Text("\(Int(itemDetail.milk*100))%")
+                        .opacity(changeType == "牛奶" ? 1:0.3)
+                        .offset(y:changeType == "牛奶" ? 0 :90.0)
+                    
+                }
+                .foregroundColor(Color(#colorLiteral(red: 0.9137254902, green: 0.4, blue: 0.03137254902, alpha: 1)))
+                .font(.system(size: screenHeight*0.04, weight: .bold))
                 
                 //MARK: - 大小選擇
                 ZStack(alignment:.top) {
@@ -91,8 +92,8 @@ struct OrderView: View {
                     }
                     .offset(y:screenHeight/24)
                 }
-                .frame(width: screenWidth*2, height: screenWidth*2)
-                .offset(y:screenHeight/3.4)
+                .frame(width: screenHeight, height: screenHeight)
+                .offset(y: UIDevice.current.userInterfaceIdiom == .pad ? screenHeight-screenHeight*0.68:screenHeight-screenHeight*0.95)
                 
                 //MARK: - 冰塊甜度牛奶選擇
                 ZStack(alignment:.top) {
@@ -157,8 +158,8 @@ struct OrderView: View {
                     
                     
                 }
-                .frame(width: screenWidth*2, height: screenWidth*2)
-                .offset(y:screenHeight/2.6)
+                .frame(width: screenHeight, height: screenHeight)
+                .offset(y:UIDevice.current.userInterfaceIdiom == .pad ? screenHeight-screenHeight*0.58:screenHeight-screenHeight*0.87)
                 
                 //MARK: - 加入購物車
                 ZStack(alignment:.top) {
@@ -196,13 +197,16 @@ struct OrderView: View {
                     }
                     .offset(y:screenHeight/16)
                 }
-                .frame(width: screenWidth*2, height: screenWidth*2)
-                .offset(y:screenHeight/1.75)
+                .frame(width: screenHeight, height: screenHeight)
+                .offset(y:UIDevice.current.userInterfaceIdiom == .pad ? screenHeight-screenHeight*0.4:screenHeight-screenHeight*0.7)
                 
                 
             }
-            .frame(width: screenWidth, height: screenHeight/3)
-            .offset(y: -screenHeight/16)
+            .frame(width: screenWidth)
+            .offset(y: UIDevice.current.userInterfaceIdiom == .pad ? screenHeight/3.2:screenHeight/3.5)
+            .clipped()
+            .frame(height: screenHeight/2)
+            
             
             
         }
@@ -210,7 +214,7 @@ struct OrderView: View {
         .background(LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 0.3678437173, green: 0.2994093597, blue: 0.2702392936, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1))]), startPoint: .top, endPoint: .bottom))
         .edgesIgnoringSafeArea(.bottom)
         .navigationTitle(itemDetail.name)
-        .navigationBarItems(leading:BackButton(backTitle:"菜單")
+        .navigationBarItems(leading:BackButton(presentationMode: _presentationMode, backTitle:"菜單")
                                 .padding(.bottom,10),
                             trailing:HeaderButton(show: $isShow.cart, iconImage: "cart",itemsInCartNum: itemsInCart.items.count)
                                 .padding(.bottom,10)

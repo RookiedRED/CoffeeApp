@@ -65,6 +65,7 @@ struct EntryView: View {
             
                
         }
+        .navigationViewStyle(StackNavigationViewStyle())
     }
 }
 

@@ -13,6 +13,7 @@ struct SideMenuView: View {
     @Binding var show : Bool
     
     let screenHeight = UIScreen.main.bounds.height
+    let screenWidth = UIScreen.main.bounds.width
     
     var body: some View {
         
@@ -47,20 +48,19 @@ struct SideMenuView: View {
                         SideMenuOption(viewModel: option)
                     })
                     
-                    
                 }
                 Spacer()
                 
             }
             .padding(.top,45)
-            .padding(.leading, 55)
-            .frame(minWidth:0,maxWidth: 360)
+            .padding(.leading, screenWidth/6)
+            .frame(minWidth:0,maxWidth:screenWidth/1.2 )
             .background(Color(#colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)).opacity(0.9))
             .cornerRadius(20)
             .padding(.trailing,60)
             .shadow(color:Color(#colorLiteral(red: 0.5176470588, green: 0.3176470588, blue: 0.01568627451, alpha: 0.88)), radius: 10, x:8,y:20 )
             .animation(.easeInOut)
-            .offset(x: isShow.menu ? -20:-UIScreen.main.bounds.width)
+            .offset(x: isShow.menu ? -screenWidth/15:-screenWidth)
             
             
         }

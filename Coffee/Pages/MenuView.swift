@@ -32,7 +32,8 @@ struct MenuView: View {
                     LazyVGrid(columns: [GridItem(.adaptive(minimum: 160))], spacing: 12, content: {
                         ForEach(items){i in
                             NavigationLink(
-                                destination: OrderView(itemDetail:ItemDetail(name: i.name, price: i.price, image: i.image, ice: 0.5, sugar: 0.5, milk: 0.5, number: 1))
+                                destination:
+                                    OrderView(itemDetail:ItemDetail(name: i.name, price: i.price, image: i.image, ice: 0.5, sugar: 0.5, milk: 0.5, number: 1))
                                     .environmentObject(isShow)
                                     .environmentObject(itemsInCart)
                                     .environmentObject(user)
@@ -60,7 +61,7 @@ struct MenuView: View {
         }
         .animation(.easeInOut)
         .navigationTitle(title)
-        .navigationBarItems(leading:BackButton(backTitle:"首頁")
+        .navigationBarItems(leading:BackButton(presentationMode: _presentionMode, backTitle: "首頁")
                                 .padding(.bottom,10),
                             trailing:HeaderButton(show: $isShow.cart, iconImage: "cart",itemsInCartNum: itemsInCart.items.count)
                                 .padding(.bottom,10)

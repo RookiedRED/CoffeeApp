@@ -7,6 +7,7 @@
 
 import SwiftUI
 struct testView:View {
+    @Environment(\.presentationMode) var presentionMode: Binding<PresentationMode>
     @State var showMenu = false
     @State var showCart = false
     var body: some View{
@@ -18,7 +19,7 @@ struct testView:View {
                         .onTapGesture {
                             self.showMenu.toggle()
                         }
-                    BackButton(backTitle:"首頁")
+                    BackButton(presentationMode: _presentionMode, backTitle:"首頁")
                     Spacer()
                     
                     Text("首頁")
