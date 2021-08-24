@@ -22,15 +22,15 @@ let itemsData = [
     
     Item(name: "拿鐵", price: 70, image: "MenuImage.drinks", level: 4 ,type:"Drink"),
     Item(name: "美式漢堡", price: 110, image: "MenuImage.hot", level: 5,type:"Meal"),
-    Item(name: "蛋糕套餐", price: 160, image: "MenuImage.main", level: 5,type:"Set"),
-    Item(name: "烤佈雷", price: 110, image: "ManuImage.mind", level: 4,type:"Dessert"),
+    Item(name: "早晨套餐", price: 160, image: "MenuImage.main", level: 5,type:"Set"),
+    Item(name: "烤佈雷", price: 110, image: "MenuImage.mind", level: 4,type:"Dessert"),
     Item(name: "拿鐵", price: 70, image: "MenuImage.drinks", level: 4,type:"Drink"),
     Item(name: "美式漢堡", price: 110, image: "MenuImage.hot", level: 5,type:"Meal"),
-    Item(name: "蛋糕套餐", price: 160, image: "MenuImage.main", level: 5,type:"Set"),
-    Item(name: "烤佈雷", price: 110, image: "ManuImage.mind", level: 4,type:"Dessert"),
+    Item(name: "早晨套餐", price: 160, image: "MenuImage.main", level: 5,type:"Set"),
+    Item(name: "烤佈雷", price: 110, image: "MenuImage.mind", level: 4,type:"Dessert"),
     Item(name: "拿鐵", price: 70, image: "MenuImage.drinks", level: 4,type:"Drink"),
     Item(name: "美式漢堡", price: 110, image: "MenuImage.hot", level: 5,type:"Meal"),
-    Item(name: "蛋糕套餐", price: 160, image: "MenuImage.main", level: 5,type:"Set"),
+    Item(name: "早晨套餐", price: 160, image: "MenuImage.main", level: 5,type:"Set"),
     
 ]
 

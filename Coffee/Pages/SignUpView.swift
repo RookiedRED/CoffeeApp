@@ -23,6 +23,9 @@ struct SignUpView: View {
     
     let db = Firestore.firestore()
     
+    func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
     
     func signUp(){
         if (userDetail.name == "" || userDetail.phoneNumber == "") {
@@ -171,6 +174,9 @@ struct SignUpView: View {
         }
         .frame(maxWidth:.infinity,maxHeight: .infinity)
         .background(LinearGradient(gradient: Gradient(colors: [Color(#colorLiteral(red: 0.3678437173, green: 0.2994093597, blue: 0.2702392936, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1)), Color(#colorLiteral(red: 0.1411764706, green: 0.1294117647, blue: 0.1176470588, alpha: 1))]), startPoint: .top, endPoint: .bottom))
+        .onTapGesture{
+            hideKeyboard()
+        }
         .navigationTitle("註冊")
         .navigationBarItems(leading:BackButton(backTitle:"登入")
                                 .padding(.bottom,10))

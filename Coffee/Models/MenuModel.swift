@@ -18,7 +18,7 @@ struct Menu : Identifiable {
 let menusData = [
     Menu(title: "熱門餐點", image: "MenuImage.hot",type:"Hot"),
     Menu(title: "全部餐點", image: "MenuImage.main",type:"All"),
-    Menu(title: "套餐", image: "ManuImage.mind",type:"Set"),
+    Menu(title: "套餐", image: "MenuImage.mind",type:"Set"),
     Menu(title: "飲料", image: "MenuImage.drinks",type:"Drink")
     
 ]
